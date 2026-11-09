@@ -1,0 +1,1647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="bitlakehub: AI-powered cybersecurity and ISO 27001 and ENS certification.">
+<meta property="og:title" content="bitlakehub">
+<meta property="og:description" content="Cybersecurity that gets certified. AI that protects your organization and takes you to ISO 27001 and ENS.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B2340">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>bitlakehub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap">
+<style>
+/* Layout: un canal de datos (Entrada → BLH-IA → Certificación) que se repite del hero a la ruta y a las demos; azul lago para proteger, oro de sello para certificar. */
+:root {
+  --bg: #F2F5F8;
+  --surface: #FFFFFF;
+  --sunken: #E5EBF1;
+  --ink: #0C1B2A;
+  --muted: #55657A;
+  --line: #D2DBE5;
+  --lake: #1F5FA8;
+  --gold: #A8841A;
+  --core: #0B2340;
+  --core-ink: #E8EFF7;
+  --core-muted: #93A9C4;
+  --good: #1D7148;
+  --warn: #A86A12;
+  --crit: #B0281F;
+  --f-display: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --wrap: 1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #07111C; --surface: #0D1A28; --sunken: #0A1622; --ink: #E3EAF2; --muted: #8C9DB3; --line: #1F3045;
+    --lake: #6FA8E8; --gold: #E0BC4F; --core: #12304F; --core-ink: #E8EFF7; --core-muted: #8FA8C6;
+    --good: #4DC48B; --warn: #E2AF4C; --crit: #F06B5F; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #07111C; --surface: #0D1A28; --sunken: #0A1622; --ink: #E3EAF2; --muted: #8C9DB3; --line: #1F3045;
+  --lake: #6FA8E8; --gold: #E0BC4F; --core: #12304F; --core-ink: #E8EFF7; --core-muted: #8FA8C6;
+  --good: #4DC48B; --warn: #E2AF4C; --crit: #F06B5F; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 112%; text-wrap: balance; margin: 0; letter-spacing: -0.015em; }
+p { margin: 0; }
+a { color: var(--lake); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--lake); }
+
+/* Fondo de página: brillos, rejilla, grano y ondas de lago */
+.bg-glow, .bg-grid, .bg-grain, .bg-waves { position: fixed; pointer-events: none; z-index: 0; }
+.bg-glow { inset: -25%; animation: glow-drift 45s ease-in-out infinite alternate;
+  background:
+    radial-gradient(38% 34% at 16% 20%, color-mix(in srgb, var(--lake) 22%, transparent), transparent 70%),
+    radial-gradient(32% 30% at 86% 74%, color-mix(in srgb, var(--gold) 15%, transparent), transparent 70%),
+    radial-gradient(44% 38% at 72% 16%, color-mix(in srgb, var(--lake) 12%, transparent), transparent 70%); }
+@keyframes glow-drift { 0% { transform: translate3d(0,0,0) rotate(0); } 50% { transform: translate3d(5%,-4%,0) rotate(10deg) scale(1.06); } 100% { transform: translate3d(-4%,5%,0) rotate(-8deg); } }
+.bg-grid { inset: 0; background-image: radial-gradient(color-mix(in srgb, var(--ink) 10%, transparent) 1px, transparent 1.3px); background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 20%, transparent 85%); mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 20%, transparent 85%); }
+.bg-grain { inset: 0; opacity: .2; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+.bg-waves { inset: 0; width: 100%; height: 100%; }
+main, footer { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .bg-glow { animation: none; } }
+
+/* Cabecera */
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.site-head .wrap { display: flex; align-items: center; gap: 24px; min-height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font: 700 20px var(--f-display); font-stretch: 115%; letter-spacing: -0.02em; }
+.brand b { color: var(--lake); font-weight: 700; }
+.brand svg { width: 28px; height: 28px; color: var(--lake); flex: none; }
+.site-nav { display: flex; gap: 4px; margin-left: auto; }
+.site-nav a { color: var(--muted); text-decoration: none; font-size: 15px; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
+.site-nav a:hover { color: var(--ink); background: var(--sunken); }
+.site-nav a.cta { color: var(--core-ink); background: var(--core); }
+@media (max-width: 860px) {
+  html { scroll-padding-top: 110px; }
+  .site-head .wrap { flex-wrap: wrap; gap: 0 12px; padding-block: 8px; min-height: 0; }
+  .brand { min-height: 40px; }
+  .site-nav { order: 3; width: 100%; margin: 4px 0 0; overflow-x: auto; scrollbar-width: none; }
+  .site-nav::-webkit-scrollbar { display: none; }
+}
+
+/* Botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 15px/1 var(--f-body); padding: 14px 18px; border-radius: 8px; border: 1px solid transparent; text-decoration: none; cursor: pointer; }
+.btn-primary { background: var(--lake); color: var(--bg); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: color-mix(in srgb, var(--surface) 70%, transparent); color: var(--ink); border-color: var(--line); }
+.btn[disabled] { opacity: .55; cursor: progress; }
+.btn.pulse { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 45%, transparent); }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 72px 40px; }
+.hero h1 { font-size: clamp(42px, 6.6vw, 82px); line-height: .95; font-weight: 800; font-stretch: 118%; margin-top: 18px; }
+.hero h1 em { font-style: normal; color: var(--lake); }
+.hero .sub { font: 500 clamp(19px, 2vw, 23px)/1.35 var(--f-body); margin-top: 22px; max-width: 34ch; color: var(--muted); }
+.hero .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.flow { width: 100%; max-width: 100%; height: auto; display: block; }
+.flow .lbl { font: 500 12px var(--f-mono); fill: var(--muted); }
+.flow .lbl-h { font: 500 10px var(--f-mono); letter-spacing: .14em; fill: var(--lake); }
+.flow .lbl-h.g { fill: var(--gold); }
+.flow .wire { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.flow .node { fill: var(--surface); stroke: var(--muted); stroke-width: 1.2; }
+.flow .dot-in { fill: var(--lake); }
+.flow .dot-out { fill: var(--gold); }
+.flow .core { fill: var(--core); }
+.flow .ring { fill: none; stroke: var(--core-muted); stroke-width: 1; stroke-dasharray: 3 7; transform-origin: 260px 190px; animation: spin 24s linear infinite; }
+.flow .pulse { fill: none; stroke: var(--gold); stroke-width: 1.2; transform-origin: 260px 190px; opacity: 0; animation: pulse 3.2s ease-out infinite; }
+.flow .pulse.p2 { animation-delay: 1.6s; }
+.flow .core-t { font: 700 13px var(--f-mono); letter-spacing: .1em; fill: var(--core-ink); }
+.mk-wave { animation: wave 3.6s ease-in-out infinite; }
+.mk-wave.w2 { animation-delay: -1.2s; } .mk-wave.w3 { animation-delay: -2.4s; }
+.mk-bit { transform-box: fill-box; transform-origin: center; animation: bit 3.2s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.75); opacity: 0; } }
+@keyframes wave { 0%, 100% { transform: translateX(-1.5px); } 50% { transform: translateX(1.5px); } }
+@keyframes bit { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-1.5px) rotate(45deg); } }
+.hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.standards { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 56px; }
+.standards span { font: 500 12px var(--f-mono); letter-spacing: .06em; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 75%, transparent); color: var(--ink); }
+.standards span b { color: var(--gold); font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { .moving, .flow .pulse { display: none; } .flow .ring, .mk-wave, .mk-bit, .ill * { animation: none !important; } }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 36px 24px; gap: 28px; } }
+
+/* Secciones */
+section { border-top: 1px solid var(--line); }
+section > .wrap { padding-block: 72px; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 64px; align-items: end; margin-bottom: 36px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.02; font-weight: 750; margin-top: 12px; }
+.sec-head p { color: var(--muted); max-width: 52ch; }
+@media (max-width: 860px) { .sec-head { grid-template-columns: minmax(0, 1fr); } section > .wrap { padding-block: 48px; } }
+
+/* Qué es */
+.big { font: 500 clamp(22px, 2.6vw, 32px)/1.3 var(--f-display); font-stretch: 105%; max-width: 30ch; margin-top: 14px; }
+.big strong { color: var(--lake); }
+.moves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+.move { margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.move .ill { display: block; width: 100%; height: auto; background: var(--sunken); border-bottom: 1px solid var(--line); }
+.move figcaption { padding: 16px 20px 20px; color: var(--muted); display: grid; gap: 4px; }
+.move figcaption .top { display: flex; align-items: baseline; gap: 10px; }
+.move figcaption .num { font: 500 12px var(--f-mono); color: var(--lake); }
+.move figcaption b { color: var(--ink); font: 700 21px var(--f-display); font-stretch: 112%; }
+.ill .ic { fill: var(--surface); stroke: var(--muted); stroke-width: 1.2; }
+.ill .ln { fill: none; stroke: var(--muted); stroke-width: 1; opacity: .7; }
+.ill .wire { fill: none; stroke: var(--line); stroke-width: 1.4; }
+.ill .t { font: 500 8.5px var(--f-mono); letter-spacing: .06em; fill: var(--muted); }
+.ill .pk { fill: var(--lake); } .ill .pk.a { fill: var(--gold); }
+.ill-trend { stroke-dasharray: 220; animation: draw 6s ease-in-out infinite; }
+@keyframes draw { 0% { stroke-dashoffset: 220; } 35%, 100% { stroke-dashoffset: 0; } }
+.ill-check { stroke-dasharray: 14; animation: tick 6s ease infinite; }
+.ill-check.c2 { animation-delay: .4s; } .ill-check.c3 { animation-delay: .8s; }
+@keyframes tick { 0%, 20% { stroke-dashoffset: 14; } 35%, 100% { stroke-dashoffset: 0; } }
+.ill-seal { transform-box: fill-box; transform-origin: center; animation: seal 6s ease infinite; }
+@keyframes seal { 0%, 45% { transform: scale(.6) rotate(-20deg); opacity: .25; } 60%, 100% { transform: none; opacity: 1; } }
+@media (max-width: 860px) { .moves { grid-template-columns: minmax(0, 1fr); } }
+
+/* Tecnología */
+.arch { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1.2fr) 40px minmax(0, 1fr); }
+.stage { padding: 26px; border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
+.stage .num { font: 12px var(--f-mono); letter-spacing: .14em; color: var(--muted); }
+.stage h3 { font-size: 24px; }
+.stage p { color: var(--muted); }
+.stage ul { list-style: none; margin: auto 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.stage li { font: 12px var(--f-mono); padding: 5px 9px; border-radius: 999px; background: var(--sunken); }
+.stage.core-stage { background: var(--core); border-color: var(--core); color: var(--core-ink); }
+.stage.core-stage .num, .stage.core-stage p { color: var(--core-muted); }
+.stage.core-stage li { background: color-mix(in srgb, var(--core-ink) 10%, transparent); color: var(--core-ink); }
+.lockup { display: inline-flex; align-items: center; gap: 12px; font-size: 32px !important; }
+.lockup svg { width: 44px; height: 44px; color: var(--core-ink); }
+.lockup i { font-style: normal; color: var(--gold); }
+.arrow { display: grid; place-items: center; color: var(--muted); }
+.arrow svg { width: 24px; height: 24px; }
+.duo { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.duo > div { padding: 22px 24px; border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 6px; }
+.duo > div.own { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 7%, var(--surface)); }
+.duo > div.own .eyebrow { color: var(--gold); }
+.duo h3 { font-size: 20px; }
+.duo p { color: var(--muted); }
+@media (max-width: 960px) { .arch, .duo { grid-template-columns: minmax(0, 1fr); } .arrow { height: 34px; } .arrow svg { transform: rotate(90deg); } }
+
+/* Services */
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.svc { border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 8px; align-content: start; }
+.svc svg { width: 30px; height: 30px; color: var(--lake); }
+.svc h3 { font-size: 20px; }
+.svc p { color: var(--muted); }
+.svc.featured { border-color: var(--gold); }
+.svc .tag { justify-self: start; font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+@media (max-width: 960px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .services { grid-template-columns: minmax(0, 1fr); } }
+
+/* Ruta a la certificación */
+.route { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; counter-reset: r; position: relative; }
+.route li { counter-increment: r; padding: 0 14px 0 0; display: grid; gap: 8px; align-content: start; position: relative; }
+.route li::before { content: counter(r, decimal-leading-zero); font: 500 13px var(--f-mono); color: var(--lake); width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--lake); background: var(--bg); position: relative; z-index: 1; }
+.route li:last-child::before { border-color: var(--gold); color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--bg)); }
+.route li::after { content: ""; position: absolute; top: 21px; left: 42px; right: 0; height: 1.5px; background: var(--line); }
+.route li:last-child::after { display: none; }
+.route b { font: 700 17px var(--f-display); font-stretch: 108%; }
+.route span { color: var(--muted); font-size: 15px; }
+.route-note { margin-top: 28px; color: var(--muted); font-size: 15px; display: flex; gap: 10px; align-items: flex-start; max-width: 760px; }
+.route-note svg { width: 18px; height: 18px; color: var(--gold); flex: none; margin-top: 3px; }
+@media (max-width: 960px) {
+  .route { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .route li { grid-template-columns: 42px minmax(0, 1fr); column-gap: 14px; padding: 0; }
+  .route li::before { grid-row: span 2; }
+  .route li::after { top: 42px; left: 20px; width: 1.5px; height: calc(100% - 24px); right: auto; }
+}
+
+/* Demos */
+.demo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.demo-tab { font: 600 15px var(--f-body); padding: 12px 18px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; display: flex; gap: 10px; align-items: baseline; }
+.demo-tab small { font: 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
+.demo-tab[aria-selected="true"] { background: var(--core); color: var(--core-ink); border-color: var(--core); }
+.demo { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.demo-head { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.demo-head h3 { font-size: 25px; margin-top: 6px; }
+.demo-head p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+.sim-badge { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--warn); border: 1px dashed currentColor; border-radius: 6px; padding: 6px 10px; white-space: nowrap; }
+.pipeline { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, .8fr) minmax(0, 1.6fr); }
+.pipe-col { padding: 22px 24px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.pipe-col + .pipe-col { border-left: 1px solid var(--line); }
+.pipe-col.proc { background: var(--core); color: var(--core-ink); }
+.pipe-label { display: flex; align-items: center; gap: 10px; font: 500 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.pipe-label b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor; font-weight: 500; letter-spacing: 0; }
+.proc .pipe-label { color: var(--core-muted); }
+.log { font: 12.5px/1.55 var(--f-mono); margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.log li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 8px; color: var(--core-muted); }
+.log li.done { color: var(--core-ink); }
+.log li::before { content: "○"; }
+.log li.done::before { content: "●"; color: var(--gold); }
+.log li.run::before { content: "◐"; color: var(--gold); }
+.proc .btn { margin-top: auto; background: var(--gold); color: var(--core); }
+.stale-note { font-size: 14px; color: var(--warn); background: color-mix(in srgb, var(--warn) 12%, transparent); padding: 8px 12px; border-radius: 6px; }
+.output.is-stale > :not(.pipe-label):not(.stale-note) { opacity: .35; filter: grayscale(.6); }
+.disclaimer { padding: 14px 24px; border-top: 1px solid var(--line); background: var(--sunken); color: var(--muted); font-size: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
+.disclaimer svg { width: 18px; height: 18px; color: var(--warn); margin-top: 2px; }
+@media (max-width: 1060px) { .pipeline { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .pipe-col.output { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); } }
+@media (max-width: 640px) { .pipeline { grid-template-columns: minmax(0, 1fr); } .pipe-col + .pipe-col { border-left: 0; border-top: 1px solid var(--line); } .pipe-col, .demo-head { padding: 18px 16px; } .demo-tab { flex: 1 1 100%; } }
+.docs { display: grid; gap: 6px; }
+.doc { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+.doc input { margin: 3px 0 0; accent-color: var(--lake); }
+.doc .n { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+.doc .m { font: 11.5px var(--f-mono); color: var(--muted); }
+.doc:has(input:not(:checked)) .n { color: var(--muted); text-decoration: line-through; }
+.field { display: grid; gap: 6px; }
+.field label { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+select, input[type="text"], input[type="email"], textarea { font: 16px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; }
+select:focus, input:focus, textarea:focus { outline: 2px solid var(--lake); outline-offset: 0; border-color: transparent; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.kpi { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+.kpi .k { font: 500 10.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.kpi .v { font: 750 26px/1.1 var(--f-display); font-variant-numeric: tabular-nums; }
+.kpi .d { font: 12px var(--f-mono); color: var(--muted); }
+.good { color: var(--good); } .warn { color: var(--warn); } .crit { color: var(--crit); }
+@media (max-width: 520px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.out-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+@media (max-width: 760px) { .out-grid { grid-template-columns: minmax(0, 1fr); } }
+.panel h4 { margin: 0 0 10px; font: 500 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 112px minmax(0, 1fr) 44px; gap: 10px; align-items: center; font-size: 14px; }
+.bar { height: 8px; background: var(--sunken); border-radius: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--lake); border-radius: 4px; transition: width .6s ease; }
+.bar-row .pct { font: 12.5px var(--f-mono); text-align: right; }
+.heat-wrap { display: grid; grid-template-columns: 18px minmax(0, 1fr); grid-template-rows: auto 18px; gap: 4px; }
+.heat-y { writing-mode: vertical-rl; transform: rotate(180deg); font: 10.5px var(--f-mono); color: var(--muted); text-align: center; }
+.heat-x { grid-column: 2; font: 10.5px var(--f-mono); color: var(--muted); text-align: center; }
+.heat { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; }
+.cell { aspect-ratio: 1.6; max-width: 100%; border-radius: 4px; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 3px; padding: 2px; }
+.chip-r { font: 500 10px var(--f-mono); background: var(--ink); color: var(--bg); border-radius: 3px; padding: 1px 4px; }
+.empty { color: var(--muted); font-size: 14px; border: 1px dashed var(--line); border-radius: 8px; padding: 16px; }
+.table-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 10px; max-height: 300px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 10.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--sunken); position: sticky; top: 0; }
+td.code { font-family: var(--f-mono); font-size: 13px; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11.5px var(--f-mono); white-space: nowrap; padding: 3px 8px; border-radius: 999px; }
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pill.good { background: color-mix(in srgb, var(--good) 12%, transparent); }
+.pill.warn { background: color-mix(in srgb, var(--warn) 14%, transparent); }
+.pill.crit { background: color-mix(in srgb, var(--crit) 12%, transparent); }
+.plan { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+.plan li { counter-increment: p; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+.plan li::before { content: counter(p, decimal-leading-zero); font: 12px var(--f-mono); color: var(--muted); padding-top: 2px; }
+.plan li .c { font: 11.5px var(--f-mono); color: var(--muted); display: block; }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.filters button { font: 12px var(--f-mono); border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: 5px 10px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.verdict { border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; border: 1px solid var(--line); }
+.verdict .k { font: 500 10.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.verdict b { font: 700 19px var(--f-display); font-stretch: 108%; }
+.verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, transparent); }
+.verdict.no { border-color: var(--warn); background: color-mix(in srgb, var(--warn) 8%, transparent); }
+.vbars { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; height: 140px; align-items: end; border-bottom: 1px solid var(--line); }
+.vcol { height: 100%; display: flex; flex-direction: column-reverse; }
+.seg { border-radius: 2px; min-height: 1px; background: var(--lake); opacity: .7; }
+.seg.hot { background: var(--crit); opacity: 1; }
+.vbars-x { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; margin-top: 4px; font: 10.5px var(--f-mono); color: var(--muted); text-align: center; }
+.chain { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+.chain div { font: 11px/1.25 var(--f-mono); padding: 10px 4px; border-radius: 6px; background: var(--sunken); color: var(--muted); text-align: center; display: grid; place-items: center; min-height: 52px; }
+.chain div.hit { background: color-mix(in srgb, var(--crit) 16%, var(--surface)); color: var(--crit); font-weight: 500; }
+@media (max-width: 560px) { .chain { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Contacto */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 56px; }
+.contact h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.02; margin-top: 12px; }
+.contact form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.contact .full { grid-column: 1 / -1; }
+.form-ok { grid-column: 1 / -1; border: 1px solid var(--good); border-radius: 8px; padding: 14px 16px; background: color-mix(in srgb, var(--good) 8%, transparent); font-size: 15px; }
+@media (max-width: 860px) { .contact { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+@media (max-width: 520px) { .contact form { grid-template-columns: minmax(0, 1fr); } .hero .actions .btn { flex: 1 1 140px; } .flow .lbl { display: none; } .flow .lbl-h { font-size: 15px; } }
+
+footer .wrap { padding-block: 30px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+footer .tag { font: 500 11px var(--f-mono); letter-spacing: .16em; text-transform: uppercase; }
+
+/* Tarjetas translúcidas sobre el fondo */
+.stage:not(.core-stage), .move, .svc, .duo > div:not(.own) { background: color-mix(in srgb, var(--surface) 80%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+/* ===== Identidad propia de bitlakehub (v2) ===== */
+/* Fondo: retícula de líneas finas en lugar de puntos */
+.bg-grid { background-image: linear-gradient(to right, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px); background-size: 72px 72px; }
+
+/* Cabecera y hero oscuros, del color del núcleo */
+body::before { background: var(--core); }
+.site-head { background: color-mix(in srgb, var(--core) 94%, transparent); border-bottom-color: color-mix(in srgb, var(--core-ink) 12%, transparent); }
+.brand { color: var(--core-ink); }
+.brand b, .brand svg { color: var(--gold); }
+.site-nav a { color: var(--core-muted); border-radius: 999px; }
+.site-nav a:hover { color: var(--core-ink); background: color-mix(in srgb, var(--core-ink) 10%, transparent); }
+.site-nav a.cta { background: var(--gold); color: var(--core); font-weight: 600; }
+.hero { background: var(--core); color: var(--core-ink); border-bottom: 1px solid var(--core); }
+.hero .eyebrow { color: var(--gold); }
+.hero h1 em { color: var(--gold); }
+.hero .sub { color: var(--core-muted); }
+.hero .btn-primary { background: var(--gold); color: var(--core); }
+.hero .btn-ghost { background: transparent; color: var(--core-ink); border-color: color-mix(in srgb, var(--core-ink) 35%, transparent); }
+.hero .wrap.standards { display: flex; grid-template-columns: none; padding-block: 0 48px; }
+.hero .standards span { background: transparent; color: var(--core-ink); border-color: color-mix(in srgb, var(--core-ink) 25%, transparent); }
+.hero-visual { position: relative; }
+.emblem { display: block; width: 100%; max-width: 460px; height: auto; margin-left: auto; }
+.emblem .orbit { fill: none; stroke: var(--core-muted); stroke-opacity: .35; stroke-width: 1; }
+.emblem .orbit.d { stroke-dasharray: 2 6; }
+.emblem .ripple { fill: none; stroke: var(--gold); stroke-width: 1.4; transform-origin: 200px 200px; opacity: 0; animation: ripple 4.5s ease-out infinite; }
+.emblem .ripple.r2 { animation-delay: 1.5s; } .emblem .ripple.r3 { animation-delay: 3s; }
+@keyframes ripple { 0% { transform: scale(.35); opacity: .8; } 100% { transform: scale(1.12); opacity: 0; } }
+.emblem .sat { fill: var(--lake); } .emblem .sat.g { fill: var(--gold); }
+.emblem .tagp rect { fill: var(--core); stroke: color-mix(in srgb, var(--core-ink) 35%, transparent); }
+.emblem .tagp text { font: 500 11px var(--f-mono); letter-spacing: .08em; fill: var(--core-ink); }
+.status-card { position: absolute; left: 0; bottom: 6px; width: min(290px, 72%); background: color-mix(in srgb, var(--surface) 94%, transparent); color: var(--ink); border-radius: 6px; padding: 14px 16px; box-shadow: 0 18px 40px rgba(0, 0, 0, .35); display: grid; gap: 10px; }
+.status-card .k { font: 500 10.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.srow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 10px; font-size: 14px; align-items: center; }
+.srow b { font: 600 13px var(--f-mono); }
+.srow .bar { grid-column: 1 / -1; height: 6px; }
+@media (prefers-reduced-motion: reduce) { .emblem .ripple { display: none; } }
+@media (max-width: 860px) { .emblem { margin: 0 auto; max-width: 340px; } .status-card { position: static; width: auto; margin-top: -24px; } }
+
+/* Secciones: titular apilado, sin columnas */
+.sec-head { grid-template-columns: minmax(0, 1fr); max-width: 720px; gap: 10px; }
+
+/* Qué es: texto a la izquierda, tres pasos en filas */
+.about2 { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 48px; align-items: start; }
+.about2-lead { position: sticky; top: 110px; }
+.about2 .moves { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 0; }
+.about2 .move { grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto; border-radius: 4px; }
+.about2 .move .ill { border-bottom: 0; border-right: 1px solid var(--line); height: 100%; }
+.about2 .move figcaption { align-content: center; }
+@media (max-width: 860px) { .about2 { grid-template-columns: minmax(0, 1fr); gap: 24px; } .about2-lead { position: static; } .about2 .move { grid-template-columns: 140px minmax(0, 1fr); } }
+@media (max-width: 480px) { .about2 .move { grid-template-columns: minmax(0, 1fr); } .about2 .move .ill { border-right: 0; border-bottom: 1px solid var(--line); } }
+
+/* Services: two featured certifications, the rest as a list */
+.services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 40px; }
+.svc.featured { background: var(--core); color: var(--core-ink); border-color: var(--core); border-radius: 6px; padding: 30px; position: relative; overflow: hidden; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.svc.featured h3 { font-size: 26px; }
+.svc.featured p { color: var(--core-muted); }
+.svc.featured svg { color: var(--gold); width: 40px; height: 40px; }
+.svc.featured::after { content: ""; position: absolute; right: -46px; bottom: -46px; width: 170px; height: 170px; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--gold) 55%, transparent); }
+.svc:not(.featured) { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; grid-template-columns: 34px minmax(0, 1fr); column-gap: 14px; padding: 18px 0 6px; }
+.svc:not(.featured) svg { grid-row: span 2; width: 28px; height: 28px; }
+@media (max-width: 560px) { .services { grid-template-columns: minmax(0, 1fr); } }
+
+/* Tecnología: una sola banda en vez de tres tarjetas con flechas */
+.arch { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.arch .arrow { display: none; }
+.arch .stage { border: 0; border-radius: 0; }
+.duo > div { border-radius: 4px; }
+@media (max-width: 960px) { .arch { grid-template-columns: minmax(0, 1fr); } }
+
+/* Formas: esquinas más rectas y botones en píldora */
+.btn { border-radius: 999px; }
+.demo { border-radius: 6px; }
+.move, .doc, .table-wrap, .kpis, .verdict, .stale-note, .empty, select, input[type="text"], input[type="email"], textarea { border-radius: 4px; }
+.demo-tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.demo-tab { border: 0; border-radius: 999px; background: transparent; padding: 10px 18px; }
+@media (max-width: 640px) { .demo-tabs { display: flex; border-radius: 18px; } .demo-tab { flex: 1 1 auto; } }
+
+/* ===== BLH-IA solution slider (home) ===== */
+.hero .wrap.sol { display: block; padding-block: 0 24px; }
+.hero .wrap.sol + .wrap { border-top: 1px solid color-mix(in srgb, var(--core-ink) 14%, transparent); }
+.sol { --s-ink: var(--core-ink); --s-mut: var(--core-muted); --s-lake: #6FA8E8; --s-crit: #F06B5F; --s-warn: #E2AF4C; --s-good: #4DC48B;
+  --s-line: color-mix(in srgb, var(--core-ink) 26%, transparent); --s-fill: color-mix(in srgb, var(--core-ink) 6%, transparent); }
+.sol-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 24px; margin-bottom: 20px; padding-top: 56px; }
+.sol-head .eyebrow { color: var(--gold); }
+.sol-head h2 { font-size: clamp(26px, 3.2vw, 38px); line-height: 1.05; font-weight: 750; margin-top: 10px; color: var(--core-ink); }
+.sol-ctrl { display: flex; gap: 8px; }
+.sol-ctrl button { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: transparent; color: var(--core-ink); border: 1px solid color-mix(in srgb, var(--core-ink) 30%, transparent); }
+.sol-ctrl button:hover { background: color-mix(in srgb, var(--core-ink) 10%, transparent); }
+.sol-ctrl svg { width: 18px; height: 18px; }
+.sol-play .i-play { display: none; }
+.sol.is-stopped .sol-play .i-play { display: block; } .sol.is-stopped .sol-play .i-pause { display: none; }
+.sol-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-bottom: 16px; }
+.sol-step { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 4px; padding: 10px 2px 12px; position: relative; color: var(--core-muted); }
+.sol-step small { font: 500 11px var(--f-mono); letter-spacing: .12em; }
+.sol-step span { font: 600 15px var(--f-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sol-step::before, .sol-step::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--core-ink) 18%, transparent); }
+.sol-step::after { background: var(--gold); transform-origin: left; transform: scaleX(var(--p, 0)); }
+.sol-step[aria-selected="true"] { color: var(--core-ink); }
+.sol-step[aria-selected="true"] small { color: var(--gold); }
+.sol-step:hover { color: var(--core-ink); }
+.sol-step:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+.sol-viewport { overflow: hidden; border-radius: 6px; touch-action: pan-y; }
+.sol-track { display: flex; transition: transform .65s cubic-bezier(.2, .7, .2, 1); }
+.sol-slide { flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr); gap: 40px; align-items: center; padding: 32px; background: color-mix(in srgb, var(--core-ink) 5%, transparent); border: 1px solid color-mix(in srgb, var(--core-ink) 14%, transparent); border-radius: 6px; }
+.sol-slide.wide { grid-template-columns: minmax(0, .62fr) minmax(0, 1.7fr); }
+.sol-text { display: grid; gap: 12px; align-content: center; }
+.sol-text .eyebrow { color: var(--gold); }
+.sol-text h3 { font-size: clamp(23px, 2.4vw, 31px); line-height: 1.08; color: var(--core-ink); }
+.sol-text p { color: var(--core-muted); }
+.sol-text ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.sol-text li { font: 12px var(--f-mono); padding: 5px 9px; border-radius: 999px; background: color-mix(in srgb, var(--core-ink) 10%, transparent); color: var(--core-ink); }
+.sv { display: block; width: 100%; height: auto; overflow: visible; }
+.sv text { font-family: var(--f-body); fill: var(--s-ink); }
+.sv .p { font-size: 12.5px; font-weight: 500; }
+.sv .t { font-size: 14px; font-weight: 600; }
+.sv .s { font-size: 11.5px; fill: var(--s-mut); }
+.sv .h { font: 800 19px var(--f-display); font-stretch: 115%; letter-spacing: .02em; }
+.sv .h tspan { fill: var(--gold); }
+.sv .m { font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; fill: var(--s-lake); }
+.sv .m.g { fill: var(--gold); }
+.sv .box { fill: var(--s-fill); stroke: var(--s-line); stroke-width: 1.2; }
+.sv .box.g { stroke: var(--gold); fill: color-mix(in srgb, var(--gold) 9%, transparent); }
+.sv .core { fill: color-mix(in srgb, #000 22%, var(--core)); stroke: color-mix(in srgb, var(--core-ink) 34%, transparent); stroke-width: 1.2; }
+.sv .wire { fill: none; stroke: var(--s-line); stroke-width: 1.4; }
+.sv .loop { fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-dasharray: 3 5; opacity: .85; }
+.sv .flowd { fill: none; stroke: var(--s-lake); stroke-width: 1.6; stroke-dasharray: 4 8; animation: sv-dash 1.2s linear infinite; }
+.sv .flowd.g { stroke: var(--gold); }
+.sv .water { fill: var(--s-lake); opacity: .28; }
+.sv .dot { fill: var(--s-lake); } .sv .dot.g { fill: var(--gold); }
+.sv .nn-e { stroke: var(--s-line); stroke-width: 1; }
+.sv .nn-e.on { stroke: var(--gold); stroke-width: 1.4; stroke-dasharray: 4 6; animation: sv-dash 1.2s linear infinite; }
+.sv .nn-h { fill: var(--core); stroke: var(--s-lake); stroke-width: 1.4; animation: sv-fire 3s ease-in-out infinite; }
+@keyframes sv-dash { to { stroke-dashoffset: -12; } }
+@keyframes sv-fire { 0%, 100% { fill: var(--core); } 40% { fill: var(--s-lake); } }
+.sv-tall { display: none; }
+@media (prefers-reduced-motion: reduce) { .sol-track { transition: none; } .sv .flowd, .sv .nn-e.on, .sv .nn-h { animation: none; } }
+@media (max-width: 860px) {
+  .hero .wrap.sol { padding-block: 0 16px; } .sol-head { padding-top: 32px; }
+  .sol-slide, .sol-slide.wide { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 22px 18px; align-items: start; }
+}
+@media (max-width: 640px) {
+  .sv-wide { display: none; } .sv-tall { display: block; }
+  .sol-steps { grid-template-columns: repeat(5, auto); justify-content: space-between; }
+  .sol-step span { display: none; }
+  .sol-step[aria-selected="true"] span { display: block; }
+  .sol-ctrl button { width: 40px; height: 40px; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- bitlakehub logo: shield, three lake waves and a golden bit -->
+    <symbol id="blh-mark" viewBox="0 0 64 64">
+      <path d="M32 4L54 12V30C54 45 44.5 55 32 60C19.5 55 10 45 10 30V12Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M18 32q3.5-3 7 0t7 0t7 0t7 0M20 40q3-2.6 6 0t6 0t6 0t6 0M24 48q2-2 4 0t4 0t4 0t4 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="28" y="15" width="8" height="8" rx="1" fill="var(--gold)"/>
+    </symbol>
+    <marker id="sv-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L8 5L1 9" fill="none" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+<canvas class="bg-waves" id="bg-waves" aria-hidden="true"></canvas>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="bitlakehub, home"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#blh-mark" width="64" height="64"/></svg><span>bit<b>lake</b>hub</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#solution">Solution</a>
+      <a href="#services">Services</a>
+      <a href="#roadmap">Certification</a>
+      <a href="#technology">Technology</a>
+      <a href="#demos">Demos</a>
+      <a class="cta" href="#contact">Request an assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+  <div class="hero">
+    <!-- BLH-IA solution slider -->
+    <div class="wrap sol" id="solution" role="region" aria-roledescription="carousel" aria-label="How the BLH-IA solution works">
+      <div class="sol-head">
+        <div>
+          <div class="eyebrow">The BLH-IA solution</div>
+          <h2>From evidence to certificate, step by step</h2>
+        </div>
+        <div class="sol-ctrl">
+          <button type="button" class="sol-prev" aria-label="Previous slide"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4.5L7 10l5.5 5.5"/></svg></button>
+          <button type="button" class="sol-play" aria-label="Pause slideshow"><svg class="i-pause" viewBox="0 0 20 20" fill="currentColor"><rect x="5.5" y="4.5" width="3" height="11" rx="1"/><rect x="11.5" y="4.5" width="3" height="11" rx="1"/></svg><svg class="i-play" viewBox="0 0 20 20" fill="currentColor"><path d="M6.5 4.5v11l9-5.5z"/></svg></button>
+          <button type="button" class="sol-next" aria-label="Next slide"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4.5L13 10l-5.5 5.5"/></svg></button>
+        </div>
+      </div>
+
+      <div class="sol-steps" role="tablist" aria-label="Solution steps">
+        <button class="sol-step" role="tab" id="sol-t0" aria-controls="sol-s0"><small>00</small><span>Overview</span></button>
+        <button class="sol-step" role="tab" id="sol-t1" aria-controls="sol-s1"><small>01</small><span>Ingest</span></button>
+        <button class="sol-step" role="tab" id="sol-t2" aria-controls="sol-s2"><small>02</small><span>Orchestrate</span></button>
+        <button class="sol-step" role="tab" id="sol-t3" aria-controls="sol-s3"><small>03</small><span>Learn</span></button>
+        <button class="sol-step" role="tab" id="sol-t4" aria-controls="sol-s4"><small>04</small><span>Deliver</span></button>
+      </div>
+
+      <div class="sol-viewport">
+        <div class="sol-track">
+
+          <!-- 00 · Overview -->
+          <div class="sol-slide wide" id="sol-s0" role="tabpanel" aria-roledescription="slide" aria-labelledby="sol-t0">
+            <div class="sol-text">
+              <div class="eyebrow">00 · The full picture</div>
+              <h3>One core, from your evidence to the certificate</h3>
+              <p>Documents and telemetry flow into a single evidence lake. BLH-IA analyzes them with two layers of AI and delivers what auditors and security teams need.</p>
+            </div>
+            <div>
+              <svg class="sv sv-wide" viewBox="0 0 880 320" role="img" aria-label="Diagram: inputs flow into the evidence lake, then into the BLH-IA core with two layers (external AI engines and proprietary ML), producing compliance and cyber-defense outputs that feed back into the lake">
+                <defs>
+                  <path id="ow0" d="M170 55C205 55 200 150 230 150"/><path id="ow1" d="M170 95C205 95 200 150 230 150"/>
+                  <path id="ow2" d="M170 135C205 135 200 150 230 150"/><path id="ow3" d="M170 175C205 175 200 150 230 150"/>
+                  <path id="ow4" d="M170 215C205 215 200 150 230 150"/><path id="ow5" d="M170 255C205 255 200 150 230 150"/>
+                </defs>
+                <text class="m" x="0" y="24">INPUTS</text>
+                <use href="#ow0" class="wire"/><use href="#ow1" class="wire"/><use href="#ow2" class="wire"/><use href="#ow3" class="wire"/><use href="#ow4" class="wire"/><use href="#ow5" class="wire"/>
+                <rect class="box" x="0" y="40" width="170" height="30" rx="15"/><text class="p" x="16" y="60">Policies &amp; procedures</text>
+                <rect class="box" x="0" y="80" width="170" height="30" rx="15"/><text class="p" x="16" y="100">Asset inventory</text>
+                <rect class="box" x="0" y="120" width="170" height="30" rx="15"/><text class="p" x="16" y="140">Risk register</text>
+                <rect class="box" x="0" y="160" width="170" height="30" rx="15"/><text class="p" x="16" y="180">Supplier contracts</text>
+                <rect class="box" x="0" y="200" width="170" height="30" rx="15"/><text class="p" x="16" y="220">Logs &amp; SIEM</text>
+                <rect class="box" x="0" y="240" width="170" height="30" rx="15"/><text class="p" x="16" y="260">EDR · Firewall · DNS</text>
+                <circle class="dot moving" r="2.8"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#ow0"/></animateMotion></circle>
+                <circle class="dot g moving" r="2.8"><animateMotion dur="2.6s" repeatCount="indefinite" begin="-0.9s"><mpath href="#ow2"/></animateMotion></circle>
+                <circle class="dot moving" r="2.8"><animateMotion dur="2.6s" repeatCount="indefinite" begin="-1.7s"><mpath href="#ow4"/></animateMotion></circle>
+                <circle class="dot g moving" r="2.8"><animateMotion dur="2.6s" repeatCount="indefinite" begin="-0.4s"><mpath href="#ow5"/></animateMotion></circle>
+                <circle class="dot moving" r="2.8"><animateMotion dur="2.6s" repeatCount="indefinite" begin="-1.3s"><mpath href="#ow1"/></animateMotion></circle>
+
+                <text class="m" x="280" y="72" text-anchor="middle">EVIDENCE LAKE</text>
+                <path class="box" d="M230 92V208A50 12 0 0 0 330 208V92"/>
+                <path class="water" d="M230 150Q255 143 280 150T330 150V208A50 12 0 0 1 230 208Z"/>
+                <path class="wire" d="M230 120A50 12 0 0 0 330 120M230 180A50 12 0 0 0 330 180"/>
+                <ellipse class="box" cx="280" cy="92" rx="50" ry="12"/>
+
+                <path class="wire" d="M330 150H380"/><path class="flowd" d="M330 150H380"/>
+
+                <rect class="core" x="380" y="30" width="260" height="240" rx="10"/>
+                <svg x="396" y="40" width="28" height="28" viewBox="0 0 64 64" style="color:var(--core-ink)"><use href="#blh-mark" width="64" height="64"/></svg>
+                <text class="h" x="432" y="61">BLH<tspan>-</tspan>IA</text>
+                <rect class="box" x="396" y="78" width="228" height="86" rx="6"/>
+                <text class="m" x="410" y="98">LAYER 1 · ORCHESTRATION</text>
+                <text class="t" x="410" y="120">External AI engines</text>
+                <text class="s" x="410" y="140">Best-in-class models, coordinated</text>
+                <text class="s" x="410" y="155">Read · Understand · Classify</text>
+                <rect class="box g" x="396" y="174" width="228" height="84" rx="6"/>
+                <text class="m g" x="410" y="194">LAYER 2 · PROPRIETARY ML</text>
+                <text class="t" x="410" y="216">Our own models</text>
+                <text class="s" x="410" y="235">Control mapping · Correlation</text>
+                <text class="s" x="410" y="250">Residual risk · Prioritization</text>
+
+                <path class="wire" d="M640 110C665 110 665 90 690 90"/><path class="flowd g" d="M640 110C665 110 665 90 690 90"/>
+                <path class="wire" d="M640 210H690"/><path class="flowd" d="M640 210H690"/>
+                <text class="m" x="690" y="24">OUTPUTS</text>
+                <rect class="box g" x="690" y="40" width="190" height="100" rx="6"/>
+                <text class="m g" x="704" y="60">COMPLIANCE</text>
+                <text class="t" x="704" y="82">ISO 27001 · ENS</text>
+                <text class="s" x="704" y="102">Statement of Applicability</text>
+                <text class="s" x="704" y="120">Remediation plan</text>
+                <rect class="box" x="690" y="160" width="190" height="100" rx="6"/>
+                <text class="m" x="704" y="180">CYBER DEFENSE</text>
+                <text class="t" x="704" y="202">Detection &amp; response</text>
+                <text class="s" x="704" y="222">Correlated incidents</text>
+                <text class="s" x="704" y="240">Response playbooks</text>
+
+                <path class="loop" d="M785 262C785 312 280 312 280 226" marker-end="url(#sv-arr)"/>
+                <text class="m g" x="532" y="318" text-anchor="middle">CONTINUOUS IMPROVEMENT</text>
+              </svg>
+
+              <svg class="sv sv-tall" viewBox="0 0 340 560" role="img" aria-label="Diagram: inputs flow into the evidence lake, then into the BLH-IA core with two layers, producing compliance and cyber-defense outputs">
+                <text class="m" x="0" y="12">INPUTS</text>
+                <rect class="box" x="0" y="22" width="164" height="28" rx="14"/><text class="p" x="12" y="40">Policies</text>
+                <rect class="box" x="176" y="22" width="164" height="28" rx="14"/><text class="p" x="188" y="40">Asset inventory</text>
+                <rect class="box" x="0" y="56" width="164" height="28" rx="14"/><text class="p" x="12" y="74">Risk register</text>
+                <rect class="box" x="176" y="56" width="164" height="28" rx="14"/><text class="p" x="188" y="74">Contracts</text>
+                <rect class="box" x="0" y="90" width="164" height="28" rx="14"/><text class="p" x="12" y="108">Logs &amp; SIEM</text>
+                <rect class="box" x="176" y="90" width="164" height="28" rx="14"/><text class="p" x="188" y="108">EDR · FW · DNS</text>
+                <path class="wire" d="M170 120V144"/><path class="flowd" d="M170 120V144"/>
+                <path class="box" d="M120 156V206A50 11 0 0 0 220 206V156"/>
+                <path class="water" d="M120 182Q145 176 170 182T220 182V206A50 11 0 0 1 120 206Z"/>
+                <ellipse class="box" cx="170" cy="156" rx="50" ry="11"/>
+                <text class="m" x="232" y="190">EVIDENCE</text><text class="m" x="232" y="204">LAKE</text>
+                <path class="wire" d="M170 220V248"/><path class="flowd" d="M170 220V248"/>
+                <rect class="core" x="0" y="250" width="340" height="172" rx="10"/>
+                <svg x="14" y="261" width="26" height="26" viewBox="0 0 64 64" style="color:var(--core-ink)"><use href="#blh-mark" width="64" height="64"/></svg>
+                <text class="h" x="48" y="281">BLH<tspan>-</tspan>IA</text>
+                <rect class="box" x="12" y="298" width="316" height="54" rx="6"/>
+                <text class="m" x="24" y="316">LAYER 1 · ORCHESTRATION</text>
+                <text class="t" x="24" y="339">External AI engines</text>
+                <rect class="box g" x="12" y="360" width="316" height="52" rx="6"/>
+                <text class="m g" x="24" y="378">LAYER 2 · PROPRIETARY ML</text>
+                <text class="t" x="24" y="400">Our own models</text>
+                <path class="wire" d="M82 422V450M258 422V450"/><path class="flowd g" d="M82 422V450"/><path class="flowd" d="M258 422V450"/>
+                <rect class="box g" x="0" y="452" width="164" height="78" rx="6"/>
+                <text class="m g" x="12" y="471">COMPLIANCE</text>
+                <text class="t" x="12" y="492">ISO 27001 · ENS</text>
+                <text class="s" x="12" y="511">SoA · Remediation plan</text>
+                <rect class="box" x="176" y="452" width="164" height="78" rx="6"/>
+                <text class="m" x="188" y="471">CYBER DEFENSE</text>
+                <text class="t" x="188" y="492">Detect &amp; respond</text>
+                <text class="s" x="188" y="511">Incidents · Playbooks</text>
+                <text class="m g" x="170" y="554" text-anchor="middle">↻ CONTINUOUS IMPROVEMENT</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 01 · Ingest -->
+          <div class="sol-slide" id="sol-s1" role="tabpanel" aria-roledescription="slide" aria-labelledby="sol-t1">
+            <div class="sol-text">
+              <div class="eyebrow">01 · Ingest</div>
+              <h3>Everything in one evidence lake</h3>
+              <p>Policies, inventories, risk registers, contracts and logs are collected, normalized and versioned, so every finding can be traced back to its source.</p>
+              <ul><li>Documents</li><li>Inventories</li><li>Logs</li><li>Threat intel</li></ul>
+            </div>
+            <svg class="sv" viewBox="0 0 420 260" role="img" aria-label="Five sources flow into the evidence lake, where data is normalized, versioned and traceable">
+              <defs>
+                <path id="iw0" d="M130 36C190 36 200 130 250 130"/><path id="iw1" d="M130 80C190 80 200 130 250 130"/>
+                <path id="iw2" d="M130 124C190 124 200 130 250 130"/><path id="iw3" d="M130 168C190 168 200 130 250 130"/>
+                <path id="iw4" d="M130 212C190 212 200 130 250 130"/>
+              </defs>
+              <use href="#iw0" class="wire"/><use href="#iw1" class="wire"/><use href="#iw2" class="wire"/><use href="#iw3" class="wire"/><use href="#iw4" class="wire"/>
+              <rect class="box" x="0" y="22" width="130" height="28" rx="14"/><text class="p" x="14" y="40">Policies</text>
+              <rect class="box" x="0" y="66" width="130" height="28" rx="14"/><text class="p" x="14" y="84">Asset inventory</text>
+              <rect class="box" x="0" y="110" width="130" height="28" rx="14"/><text class="p" x="14" y="128">Risk register</text>
+              <rect class="box" x="0" y="154" width="130" height="28" rx="14"/><text class="p" x="14" y="172">Contracts</text>
+              <rect class="box" x="0" y="198" width="130" height="28" rx="14"/><text class="p" x="14" y="216">Logs · SIEM</text>
+              <circle class="dot moving" r="3"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#iw0"/></animateMotion></circle>
+              <circle class="dot g moving" r="3"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-0.5s"><mpath href="#iw1"/></animateMotion></circle>
+              <circle class="dot moving" r="3"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1s"><mpath href="#iw2"/></animateMotion></circle>
+              <circle class="dot g moving" r="3"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1.5s"><mpath href="#iw3"/></animateMotion></circle>
+              <circle class="dot moving" r="3"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-2s"><mpath href="#iw4"/></animateMotion></circle>
+              <text class="m" x="310" y="42" text-anchor="middle">EVIDENCE LAKE</text>
+              <path class="box" d="M250 66V186A60 13 0 0 0 370 186V66"/>
+              <path class="water" d="M250 112Q280 104 310 112T370 112V186A60 13 0 0 1 250 186Z"/>
+              <path class="wire" d="M250 96A60 13 0 0 0 370 96M250 142A60 13 0 0 0 370 142"/>
+              <ellipse class="box" cx="310" cy="66" rx="60" ry="13"/>
+              <text class="s" x="310" y="226" text-anchor="middle">Normalized · versioned · traceable</text>
+            </svg>
+          </div>
+
+          <!-- 02 · Orchestrate -->
+          <div class="sol-slide" id="sol-s2" role="tabpanel" aria-roledescription="slide" aria-labelledby="sol-t2">
+            <div class="sol-text">
+              <div class="eyebrow">02 · Orchestrate · Layer 1</div>
+              <h3>The best external AI engines, coordinated</h3>
+              <p>BLH-IA sends each task to the engine that does it best (reading documents, understanding language, classifying) and cross-checks the results before using them.</p>
+              <ul><li>Document AI</li><li>Language models</li><li>Vision &amp; OCR</li><li>Classifiers</li></ul>
+            </div>
+            <svg class="sv" viewBox="0 0 420 260" role="img" aria-label="An orchestrator in the center routes a task to four external AI engines and returns a cross-checked result">
+              <defs>
+                <path id="sp0" d="M210 130L148 34"/><path id="sp1" d="M210 130L272 34"/>
+                <path id="sp2" d="M210 130L148 226"/><path id="sp3" d="M210 130L272 226"/>
+              </defs>
+              <use href="#sp0" class="wire"/><use href="#sp1" class="wire"/><use href="#sp2" class="wire"/><use href="#sp3" class="wire"/>
+              <circle class="dot moving" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#sp0"/></animateMotion></circle>
+              <circle class="dot g moving" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" begin="-0.7s" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#sp1"/></animateMotion></circle>
+              <circle class="dot moving" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" begin="-1.4s" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#sp2"/></animateMotion></circle>
+              <circle class="dot g moving" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" begin="-2.1s" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"><mpath href="#sp3"/></animateMotion></circle>
+              <rect class="box" x="92" y="19" width="112" height="30" rx="15"/><text class="p" x="148" y="38" text-anchor="middle">Document AI</text>
+              <rect class="box" x="216" y="19" width="112" height="30" rx="15"/><text class="p" x="272" y="38" text-anchor="middle">Language models</text>
+              <rect class="box" x="92" y="211" width="112" height="30" rx="15"/><text class="p" x="148" y="230" text-anchor="middle">Vision &amp; OCR</text>
+              <rect class="box" x="216" y="211" width="112" height="30" rx="15"/><text class="p" x="272" y="230" text-anchor="middle">Classifiers</text>
+              <path class="wire" d="M96 130H176"/><path class="flowd" d="M96 130H176"/>
+              <path class="wire" d="M244 130H324"/><path class="flowd g" d="M244 130H324"/>
+              <rect class="box" x="0" y="104" width="96" height="52" rx="6"/>
+              <text class="m" x="10" y="124">TASK</text><text class="s" x="10" y="144">Map evidence</text>
+              <rect class="box g" x="324" y="104" width="96" height="52" rx="6"/>
+              <text class="m g" x="334" y="124">RESULT</text><text class="s" x="334" y="144">Cross-checked</text>
+              <circle class="core" cx="210" cy="130" r="34"/>
+              <svg x="194" y="113" width="32" height="32" viewBox="0 0 64 64" style="color:var(--core-ink)"><use href="#blh-mark" width="64" height="64"/></svg>
+              <text class="m" x="210" y="188" text-anchor="middle">ORCHESTRATOR</text>
+            </svg>
+          </div>
+
+          <!-- 03 · Learn -->
+          <div class="sol-slide" id="sol-s3" role="tabpanel" aria-roledescription="slide" aria-labelledby="sol-t3">
+            <div class="sol-text">
+              <div class="eyebrow">03 · Learn · Layer 2</div>
+              <h3>Proprietary models trained for security and regulation</h3>
+              <p>Our own machine-learning models map evidence to ISO 27001 controls and ENS measures, correlate threats across sources and score residual risk.</p>
+              <ul><li>Control mapping</li><li>Threat correlation</li><li>Residual risk</li></ul>
+            </div>
+            <svg class="sv" viewBox="0 0 420 260" role="img" aria-label="Neural network: evidence, logs, risks and threat intelligence go in; control mapping, threat correlation and residual risk come out">
+              <g id="nn"></g>
+              <text class="s" x="96" y="64" text-anchor="end">Evidence</text>
+              <text class="s" x="96" y="109" text-anchor="end">Logs</text>
+              <text class="s" x="96" y="154" text-anchor="end">Risks</text>
+              <text class="s" x="96" y="199" text-anchor="end">Threat intel</text>
+              <text class="p" x="304" y="79">Control mapping</text>
+              <text class="p" x="304" y="134">Threat correlation</text>
+              <text class="p" x="304" y="189">Residual risk</text>
+              <text class="m g" x="210" y="254" text-anchor="middle">TRAINED FOR SECURITY &amp; REGULATION</text>
+            </svg>
+          </div>
+
+          <!-- 04 · Deliver -->
+          <div class="sol-slide" id="sol-s4" role="tabpanel" aria-roledescription="slide" aria-labelledby="sol-t4">
+            <div class="sol-text">
+              <div class="eyebrow">04 · Deliver</div>
+              <h3>Audit-ready outputs and real-time response</h3>
+              <p>Statement of Applicability, remediation plan, risk map and prioritized alerts. Every cycle feeds the next, so your security posture keeps improving.</p>
+              <ul><li>SoA</li><li>Remediation plan</li><li>Risk map</li><li>Alerts</li></ul>
+            </div>
+            <svg class="sv" viewBox="0 0 420 260" role="img" aria-label="An audit-ready Statement of Applicability with a seal, next to a live alerts panel; both feed the next cycle">
+              <rect class="box" x="10" y="20" width="150" height="200" rx="4"/>
+              <text class="m g" x="24" y="44">SOA · ISO 27001</text>
+              <rect x="24" y="74" width="12" height="12" rx="2" class="box"/><path class="ill-check" d="M26.5 80l3 3 5-6" fill="none" stroke="var(--s-good)" stroke-width="2" stroke-linecap="round"/>
+              <rect x="24" y="100" width="12" height="12" rx="2" class="box"/><path class="ill-check c2" d="M26.5 106l3 3 5-6" fill="none" stroke="var(--s-good)" stroke-width="2" stroke-linecap="round"/>
+              <rect x="24" y="126" width="12" height="12" rx="2" class="box"/><path class="ill-check c3" d="M26.5 132l3 3 5-6" fill="none" stroke="var(--s-good)" stroke-width="2" stroke-linecap="round"/>
+              <path class="wire" d="M44 80h100M44 106h100M44 132h80M24 158h120M24 172h90"/>
+              <g class="ill-seal">
+                <circle cx="132" cy="192" r="22" fill="var(--gold)"/>
+                <circle cx="132" cy="192" r="16" fill="none" stroke="var(--core)" stroke-width="1.4" stroke-dasharray="2 2"/>
+                <path d="M124 192l6 6 10-12" fill="none" stroke="var(--core)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <rect class="box" x="200" y="20" width="210" height="200" rx="4"/>
+              <text class="m" x="214" y="44">ALERTS · LIVE</text>
+              <rect class="box" x="214" y="58" width="182" height="34" rx="4"/><circle cx="230" cy="75" r="4" fill="var(--s-crit)"/><text class="p" x="242" y="79">C2 traffic · isolated</text>
+              <rect class="box" x="214" y="100" width="182" height="34" rx="4"/><circle cx="230" cy="117" r="4" fill="var(--s-warn)"/><text class="p" x="242" y="121">Brute force · blocked</text>
+              <rect class="box" x="214" y="142" width="182" height="34" rx="4"/><circle cx="230" cy="159" r="4" fill="var(--s-good)"/><text class="p" x="242" y="163">Port scan · reviewed</text>
+              <text class="m g" x="214" y="204">MEAN DETECTION · 4 MIN</text>
+              <path class="loop" d="M305 222C305 252 85 252 85 224" marker-end="url(#sv-arr)"/>
+              <text class="m g" x="195" y="258" text-anchor="middle">FEEDS THE NEXT CYCLE</text>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Protection · Compliance · Certification</div>
+        <h1>Cybersecurity that gets <em>certified.</em></h1>
+        <p class="sub">AI that protects your organization and takes you to ISO 27001 and ENS certification.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#demos">See the demos</a>
+          <a class="btn btn-ghost" href="#roadmap">Path to certification</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg class="emblem" viewBox="0 0 400 400" role="img" aria-label="bitlakehub shield surrounded by waves and the ISO 27001, ENS and CCN-STIC frameworks">
+          <defs>
+            <path id="orb1" d="M200 70a130 130 0 1 1 -0.1 0z"/>
+            <path id="orb2" d="M200 30a170 170 0 1 1 -0.1 0z"/>
+          </defs>
+          <circle class="orbit" cx="200" cy="200" r="90"/>
+          <circle class="orbit d" cx="200" cy="200" r="130"/>
+          <circle class="orbit" cx="200" cy="200" r="170"/>
+          <circle class="ripple" cx="200" cy="200" r="170"/>
+          <circle class="ripple r2" cx="200" cy="200" r="170"/>
+          <circle class="ripple r3" cx="200" cy="200" r="170"/>
+          <g transform="translate(140 136) scale(1.875)" style="color:var(--core-ink)">
+            <path d="M32 4L54 12V30C54 45 44.5 55 32 60C19.5 55 10 45 10 30V12Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path class="mk-wave" d="M18 32q3.5-3 7 0t7 0t7 0t7 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="mk-wave w2" d="M20 40q3-2.6 6 0t6 0t6 0t6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="mk-wave w3" d="M24 48q2-2 4 0t4 0t4 0t4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <rect class="mk-bit" x="28" y="15" width="8" height="8" rx="1" fill="var(--gold)"/>
+          </g>
+          <circle class="sat moving" r="4"><animateMotion dur="14s" repeatCount="indefinite"><mpath href="#orb1"/></animateMotion></circle>
+          <circle class="sat g moving" r="4"><animateMotion dur="22s" repeatCount="indefinite" begin="-8s"><mpath href="#orb2"/></animateMotion></circle>
+          <circle class="sat moving" r="3"><animateMotion dur="22s" repeatCount="indefinite" begin="-15s"><mpath href="#orb2"/></animateMotion></circle>
+          <g class="tagp"><rect x="265" y="58" width="88" height="24" rx="12"/><text x="309" y="74" text-anchor="middle">ISO 27001</text></g>
+          <g class="tagp"><rect x="7" y="188" width="46" height="24" rx="12"/><text x="30" y="204" text-anchor="middle">ENS</text></g>
+          <g class="tagp"><rect x="269" y="318" width="80" height="24" rx="12"/><text x="309" y="334" text-anchor="middle">CCN-STIC</text></g>
+        </svg>
+        <div class="status-card" aria-label="Example compliance status">
+          <span class="k">Compliance status · example</span>
+          <div class="srow"><span>ISO/IEC 27001</span><b>82%</b><span class="bar"><i style="width:82%"></i></span></div>
+          <div class="srow"><span>ENS · medium category</span><b>74%</b><span class="bar"><i style="width:74%;background:var(--gold)"></i></span></div>
+          <div class="srow"><span>Critical incidents</span><b class="good">0</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap standards" aria-label="Reference frameworks">
+      <span><b>●</b> ISO/IEC 27001:2022</span>
+      <span><b>●</b> ENS · RD 311/2022</span>
+      <span><b>●</b> CCN-STIC guides</span>
+      <span><b>●</b> MITRE ATT&amp;CK</span>
+    </div>
+
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about2">
+      <div class="about2-lead">
+        <div class="eyebrow">What is bitlakehub?</div>
+        <p class="big">Our own core, <strong>BLH-IA</strong>, protects your systems and prepares your evidence for certification.</p>
+      </div>
+      <div class="moves">
+        <figure class="move">
+          <svg class="ill" viewBox="0 0 240 150" role="img" aria-label="Policies, assets, logs and evidence flow into a shared repository">
+            <defs>
+              <path id="ip0" d="M46 24 C110 24 120 70 158 72"/><path id="ip1" d="M46 58 C100 58 120 72 158 74"/>
+              <path id="ip2" d="M46 92 C100 92 120 78 158 76"/><path id="ip3" d="M46 126 C110 126 120 82 158 78"/>
+              <clipPath id="cyl-clip"><rect x="160" y="40" width="60" height="72"/></clipPath>
+            </defs>
+            <use href="#ip0" class="wire"/><use href="#ip1" class="wire"/><use href="#ip2" class="wire"/><use href="#ip3" class="wire"/>
+            <rect class="ic" x="24" y="12" width="18" height="24" rx="2"/><path class="ln" d="M28 19h10M28 23h10M28 27h7"/>
+            <rect class="ic" x="22" y="47" width="22" height="22" rx="2"/><path class="ln" d="M22 54h22M22 61h22M30 47v22M37 47v22"/>
+            <path class="ic" d="M33 80l10 4v6c0 6-4 10-10 12c-6-2-10-6-10-12v-6z"/>
+            <rect class="ic" x="22" y="117" width="22" height="18" rx="2"/><path class="ln" d="M25 122h16M25 126h16M25 130h10"/>
+            <path class="ic" d="M160 40V112A30 8 0 0 0 220 112V40"/>
+            <rect x="160" y="70" width="60" height="42" fill="var(--lake)" opacity=".22" clip-path="url(#cyl-clip)">
+              <animate attributeName="y" values="96;58;96" dur="7s" repeatCount="indefinite"/>
+              <animate attributeName="height" values="16;54;16" dur="7s" repeatCount="indefinite"/>
+            </rect>
+            <path class="ln" d="M160 64A30 8 0 0 0 220 64M160 88A30 8 0 0 0 220 88"/>
+            <ellipse class="ic" cx="190" cy="40" rx="30" ry="8"/>
+            <circle class="pk moving" r="2.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath href="#ip0"/></animateMotion></circle>
+            <circle class="pk a moving" r="2.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-0.6s"><mpath href="#ip1"/></animateMotion></circle>
+            <circle class="pk moving" r="2.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1.2s"><mpath href="#ip2"/></animateMotion></circle>
+            <circle class="pk a moving" r="2.6"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1.8s"><mpath href="#ip3"/></animateMotion></circle>
+            <text class="t" x="190" y="136" text-anchor="middle">EVIDENCE LAKE</text>
+          </svg>
+          <figcaption><span class="top"><span class="num">01</span><b>Integrate</b></span>We bring together policies, assets, logs and evidence.</figcaption>
+        </figure>
+        <figure class="move">
+          <svg class="ill" viewBox="0 0 240 150" role="img" aria-label="Risk trend line with a detected anomaly">
+            <path class="wire" d="M24 14V128H228"/>
+            <path class="wire" d="M24 50H228M24 89H228" stroke-dasharray="2 4"/>
+            <g id="ill-scatter"></g>
+            <path class="ill-trend" d="M28 120L224 34" stroke="var(--lake)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="170" cy="116" r="3.2" fill="var(--crit)"/>
+            <circle cx="170" cy="116" r="6" fill="none" stroke="var(--crit)" stroke-width="1.2">
+              <animate attributeName="r" values="5;13;5" dur="2.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0;1" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+            <text class="t" x="180" y="108" style="fill:var(--crit)">THREAT</text>
+            <text class="t" x="150" y="54" style="fill:var(--lake)">MATURITY</text>
+          </svg>
+          <figcaption><span class="top"><span class="num">02</span><b>Analyze</b></span>We detect gaps, risks and threats.</figcaption>
+        </figure>
+        <figure class="move">
+          <svg class="ill" viewBox="0 0 240 150" role="img" aria-label="Certification document with verified controls and a seal">
+            <rect class="ic" x="40" y="14" width="120" height="124" rx="4"/>
+            <rect x="52" y="26" width="70" height="6" rx="2" fill="var(--line)"/>
+            <path class="ln" d="M70 52h70M70 72h70M70 92h56"/>
+            <rect class="ic" x="52" y="46" width="12" height="12" rx="2"/><path class="ill-check" d="M54.5 52l3 3 5-6" fill="none" stroke="var(--good)" stroke-width="2" stroke-linecap="round"/>
+            <rect class="ic" x="52" y="66" width="12" height="12" rx="2"/><path class="ill-check c2" d="M54.5 72l3 3 5-6" fill="none" stroke="var(--good)" stroke-width="2" stroke-linecap="round"/>
+            <rect class="ic" x="52" y="86" width="12" height="12" rx="2"/><path class="ill-check c3" d="M54.5 92l3 3 5-6" fill="none" stroke="var(--good)" stroke-width="2" stroke-linecap="round"/>
+            <g class="ill-seal">
+              <path d="M168 112l-8 24 12-6 6 10 4-26z" fill="var(--gold)" opacity=".7"/>
+              <circle cx="176" cy="104" r="22" fill="var(--gold)"/>
+              <circle cx="176" cy="104" r="16" fill="none" stroke="var(--surface)" stroke-width="1.4" stroke-dasharray="2 2"/>
+              <path d="M168 104l6 6 10-12" fill="none" stroke="var(--surface)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </svg>
+          <figcaption><span class="top"><span class="num">03</span><b>Certify</b></span>You reach the audit with everything ready.</figcaption>
+        </figure>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Services</div>
+          <h2>Security and compliance, one team</h2>
+        </div>
+        <p>We protect your systems and stay with you all the way to the certificate.</p>
+      </div>
+      <div class="services">
+        <article class="svc featured">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="20" height="23" rx="2"/><path d="M9 10h12M9 15h12M9 20h7"/><circle cx="22" cy="22" r="5" fill="var(--surface)"/><path d="M19.8 22l1.6 1.6 2.8-3"/></svg>
+          <span class="tag">Certification</span>
+          <h3>ISO/IEC 27001</h3>
+          <p>ISMS implementation and audit preparation.</p>
+        </article>
+        <article class="svc featured">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 3l10 4v8c0 7-4.5 11-10 13C9.5 26 5 22 5 15V7z"/><path d="M10.5 15l3 3 6-6"/></svg>
+          <span class="tag">Certification</span>
+          <h3>National Security Framework (ENS)</h3>
+          <p>Compliance with Spain's ENS at basic, medium or high category.</p>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="15" cy="15" r="11"/><circle cx="15" cy="15" r="6"/><path d="M15 15l7-7"/><circle cx="15" cy="15" r="1.5" fill="currentColor"/></svg>
+          <h3>Monitoring and response</h3>
+          <p>Threat detection and incident response.</p>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 24h22"/><rect x="6" y="14" width="4" height="10"/><rect x="13" y="8" width="4" height="16"/><rect x="20" y="11" width="4" height="13"/></svg>
+          <h3>Risk analysis</h3>
+          <p>Assets, threats and residual risk, prioritized.</p>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="13" cy="13" r="8"/><path d="M19 19l7 7"/><path d="M9.5 13l2.5 2.5 4.5-5"/></svg>
+          <h3>Internal audit</h3>
+          <p>An independent review before the official audit.</p>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="4"/><circle cx="21" cy="10" r="4"/><path d="M3 25c0-4 3-7 7-7s7 3 7 7M14 25c0-4 3-7 7-7s7 3 7 7"/></svg>
+          <h3>Security awareness</h3>
+          <p>Training and simulated phishing for your team.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Path to certification</div>
+          <h2>From the first meeting to the certificate</h2>
+        </div>
+        <p>Six steps, with BLH-IA working on every one of them.</p>
+      </div>
+      <ol class="route">
+        <li><b>Assessment</b><span>Where you stand today.</span></li>
+        <li><b>Gap analysis</b><span>What's missing and the risk it carries.</span></li>
+        <li><b>Remediation plan</b><span>Prioritized actions and timelines.</span></li>
+        <li><b>Implementation</b><span>Policies, controls and evidence.</span></li>
+        <li><b>Internal audit</b><span>The dress rehearsal.</span></li>
+        <li><b>Certification</b><span>Audit by the certification body.</span></li>
+      </ol>
+      <p class="route-note"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 6v.5"/></svg>The certificate is issued by an accredited certification body. bitlakehub prepares you to pass.</p>
+    </div>
+  </section>
+
+  <section id="technology">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">BLH-IA technology</div>
+          <h2>One core. Security and compliance.</h2>
+        </div>
+        <p>The same evidence serves both to protect and to certify.</p>
+      </div>
+      <div class="arch">
+        <div class="stage">
+          <div class="num">01 · INPUT</div>
+          <h3>Evidence</h3>
+          <p>Documents, inventories and logs.</p>
+          <ul><li>Policies</li><li>Assets</li><li>Risks</li><li>Logs</li><li>Contracts</li></ul>
+        </div>
+        <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M14 7l5 5-5 5"/></svg></div>
+        <div class="stage core-stage">
+          <div class="num">02 · CORE</div>
+          <h3 class="lockup"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#blh-mark" width="64" height="64"/></svg><span>BLH<i>-</i>IA</span></h3>
+          <p>External AI engines and our own models.</p>
+          <ul><li>Control mapping</li><li>Threat detection</li><li>Residual risk</li><li>Prioritization</li></ul>
+        </div>
+        <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h15M14 7l5 5-5 5"/></svg></div>
+        <div class="stage">
+          <div class="num">03 · OUTPUT</div>
+          <h3>Deliverables</h3>
+          <p>Ready for the auditor.</p>
+          <ul><li>Statement of Applicability</li><li>Remediation plan</li><li>Risk map</li><li>Alerts</li></ul>
+        </div>
+      </div>
+      <div class="duo">
+        <div>
+          <div class="eyebrow">Layer 1 · Orchestration</div>
+          <h3>External AI engines</h3>
+          <p>The best on the market, coordinated.</p>
+        </div>
+        <div class="own">
+          <div class="eyebrow">Layer 2 · Own models</div>
+          <h3>Proprietary machine learning</h3>
+          <p>Trained for security and regulation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demos">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Demos</div>
+          <h2>Try it with sample data</h2>
+        </div>
+        <p>Change the inputs and press “Process”.</p>
+      </div>
+      <div class="demo-tabs" role="tablist" aria-label="Demos">
+        <button class="demo-tab" role="tab" id="tab-iso" aria-controls="iso" aria-selected="true"><small>Demo 01</small> ISO 27001</button>
+        <button class="demo-tab" role="tab" id="tab-ens" aria-controls="ens" aria-selected="false"><small>Demo 02</small> ENS</button>
+        <button class="demo-tab" role="tab" id="tab-soc" aria-controls="soc" aria-selected="false"><small>Demo 03</small> Cyber defense</button>
+      </div>
+
+      <!-- DEMO 01 · ISO 27001 -->
+      <div class="demo" id="iso" role="tabpanel" aria-labelledby="tab-iso">
+        <div class="demo-head">
+          <div>
+            <div class="eyebrow">BLH-IA · ISO/IEC 27001:2022</div>
+            <h3>ISO 27001 readiness</h3>
+            <p>Gaps, risks and an improvement plan from your documents.</p>
+          </div>
+          <span class="sim-badge">Simulation · Fictitious data</span>
+        </div>
+        <div class="pipeline">
+          <div class="pipe-col" id="iso-in">
+            <div class="pipe-label"><b>1</b> Input · Documentation</div>
+            <div class="docs" id="iso-src"></div>
+          </div>
+          <div class="pipe-col proc">
+            <div class="pipe-label"><b>2</b> BLH-IA · Processing</div>
+            <ul class="log" id="iso-log"></ul>
+            <button class="btn" id="iso-run" type="button">Process with BLH-IA</button>
+          </div>
+          <div class="pipe-col output" id="iso-out">
+            <div class="pipe-label"><b>3</b> Output · Results</div>
+            <div class="stale-note" id="iso-stale" hidden>The inputs have changed. Process again.</div>
+            <div class="kpis" id="iso-kpis"></div>
+            <div class="out-grid">
+              <div class="panel"><h4>Coverage by Annex A theme</h4><div class="bars" id="iso-bars"></div></div>
+              <div class="panel"><h4>Residual risk map</h4><div id="iso-heat"></div></div>
+            </div>
+            <div class="panel">
+              <h4>Control matrix</h4>
+              <div class="filters" data-table="iso">
+                <button type="button" data-f="all" aria-pressed="true">All</button>
+                <button type="button" data-f="gap" aria-pressed="false">No evidence</button>
+                <button type="button" data-f="partial" aria-pressed="false">Partial</button>
+                <button type="button" data-f="ok" aria-pressed="false">Covered</button>
+              </div>
+              <div class="table-wrap"><table><thead><tr><th>Control</th><th>Name</th><th>Status</th><th>Evidence</th></tr></thead><tbody id="iso-table"></tbody></table></div>
+            </div>
+            <div class="panel"><h4>Improvement plan · priorities</h4><ol class="plan" id="iso-plan"></ol></div>
+          </div>
+        </div>
+        <div class="disclaimer"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l8 15H2z"/><path d="M10 8v4M10 14.5v.5"/></svg><p>Fictitious data. This is not a certification and does not replace the auditor.</p></div>
+      </div>
+
+      <!-- DEMO 02 · ENS -->
+      <div class="demo" id="ens" role="tabpanel" aria-labelledby="tab-ens" hidden>
+        <div class="demo-head">
+          <div>
+            <div class="eyebrow">BLH-IA · ENS · RD 311/2022</div>
+            <h3>ENS compliance</h3>
+            <p>Applicable measures, Statement of Applicability and plan.</p>
+          </div>
+          <span class="sim-badge">Simulation · Fictitious data</span>
+        </div>
+        <div class="pipeline">
+          <div class="pipe-col" id="ens-in">
+            <div class="pipe-label"><b>1</b> Input · System and documentation</div>
+            <div class="field">
+              <label for="ens-cat">System category</label>
+              <select id="ens-cat">
+                <option value="1">Basic</option>
+                <option value="2" selected>Medium</option>
+                <option value="3">High</option>
+              </select>
+            </div>
+            <div class="docs" id="ens-src"></div>
+          </div>
+          <div class="pipe-col proc">
+            <div class="pipe-label"><b>2</b> BLH-IA · Processing</div>
+            <ul class="log" id="ens-log"></ul>
+            <button class="btn" id="ens-run" type="button">Process with BLH-IA</button>
+          </div>
+          <div class="pipe-col output" id="ens-out">
+            <div class="pipe-label"><b>3</b> Output · Compliance</div>
+            <div class="stale-note" id="ens-stale" hidden>The inputs have changed. Process again.</div>
+            <div class="kpis" id="ens-kpis"></div>
+            <div class="out-grid">
+              <div class="panel"><h4>Compliance by framework</h4><div class="bars" id="ens-bars"></div></div>
+              <div class="panel"><h4>Assessment type</h4><div id="ens-verdict"></div></div>
+            </div>
+            <div class="panel">
+              <h4>Statement of Applicability</h4>
+              <div class="filters" data-table="ens">
+                <button type="button" data-f="all" aria-pressed="true">All</button>
+                <button type="button" data-f="gap" aria-pressed="false">No evidence</button>
+                <button type="button" data-f="partial" aria-pressed="false">Partial</button>
+                <button type="button" data-f="ok" aria-pressed="false">Met</button>
+              </div>
+              <div class="table-wrap"><table><thead><tr><th>Measure</th><th>Name</th><th>Status</th><th>Evidence</th></tr></thead><tbody id="ens-table"></tbody></table></div>
+            </div>
+            <div class="panel"><h4>Compliance plan · priorities</h4><ol class="plan" id="ens-plan"></ol></div>
+          </div>
+        </div>
+        <div class="disclaimer"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l8 15H2z"/><path d="M10 8v4M10 14.5v.5"/></svg><p>Fictitious data and a simplified selection of Annex II measures. Does not replace the audit.</p></div>
+      </div>
+
+      <!-- DEMO 03 · Cyber defense -->
+      <div class="demo" id="soc" role="tabpanel" aria-labelledby="tab-soc" hidden>
+        <div class="demo-head">
+          <div>
+            <div class="eyebrow">BLH-IA · Detection and response</div>
+            <h3>Cyber defense</h3>
+            <p>Incidents from your logs, mapped to MITRE ATT&amp;CK.</p>
+          </div>
+          <span class="sim-badge">Simulation · Fictitious network</span>
+        </div>
+        <div class="pipeline">
+          <div class="pipe-col" id="soc-in">
+            <div class="pipe-label"><b>1</b> Input · Telemetry</div>
+            <div class="field">
+              <label for="soc-sens">Sensitivity</label>
+              <select id="soc-sens">
+                <option value="low">Low · fewer alerts</option>
+                <option value="balanced" selected>Balanced</option>
+                <option value="high">High · catch everything</option>
+              </select>
+            </div>
+            <div class="docs" id="soc-src"></div>
+          </div>
+          <div class="pipe-col proc">
+            <div class="pipe-label"><b>2</b> BLH-IA · Processing</div>
+            <ul class="log" id="soc-log"></ul>
+            <button class="btn" id="soc-run" type="button">Process with BLH-IA</button>
+          </div>
+          <div class="pipe-col output" id="soc-out">
+            <div class="pipe-label"><b>3</b> Output · Security operations</div>
+            <div class="stale-note" id="soc-stale" hidden>The inputs have changed. Process again.</div>
+            <div class="kpis" id="soc-kpis"></div>
+            <div class="out-grid">
+              <div class="panel"><h4>Events per hour · last 24 h</h4><div id="soc-hours"></div></div>
+              <div class="panel"><h4>Attack chain</h4><div class="chain" id="soc-chain"></div><div id="soc-camp" style="margin-top:10px"></div></div>
+            </div>
+            <div class="panel"><h4>Incidents</h4><div class="table-wrap"><table><thead><tr><th>ID</th><th>Detection</th><th>ATT&amp;CK</th><th>Asset</th><th>Severity</th><th>Confidence</th></tr></thead><tbody id="soc-table"></tbody></table></div></div>
+            <div class="panel"><h4>Response plan</h4><ol class="plan" id="soc-plan"></ol></div>
+          </div>
+        </div>
+        <div class="disclaimer"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l8 15H2z"/><path d="M10 8v4M10 14.5v.5"/></svg><p>Fictitious network, hosts and incidents. Techniques per MITRE ATT&amp;CK.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <div class="eyebrow">Contact</div>
+        <h2>Start with an assessment</h2>
+        <p style="color:var(--muted);margin-top:14px;max-width:44ch">We'll tell you where you stand and how far you are from certification.</p>
+      </div>
+      <form id="contact-form" novalidate>
+        <div class="field"><label for="c-name">Name</label><input type="text" id="c-name" autocomplete="name"></div>
+        <div class="field"><label for="c-org">Organization</label><input type="text" id="c-org" autocomplete="organization"></div>
+        <div class="field full"><label for="c-email">Email</label><input type="email" id="c-email" autocomplete="email"></div>
+        <div class="field full"><label for="c-topic">Interested in</label>
+          <select id="c-topic">
+            <option>ISO 27001 certification</option>
+            <option>ENS compliance</option>
+            <option>Monitoring and response</option>
+            <option>Internal audit</option>
+          </select>
+        </div>
+        <div class="field full"><label for="c-msg">Message</label><textarea id="c-msg" rows="4"></textarea></div>
+        <div class="full"><button class="btn btn-primary" type="submit">Send request</button></div>
+        <div class="form-ok" id="form-ok" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 bitlakehub · Powered by BLH-IA</span>
+    <span class="tag">Protection · Compliance · Certification</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function normal(rng) { let u = 0; while (u === 0) u = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rng()); }
+  const NS = 'http://www.w3.org/2000/svg';
+  const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const onTheme = fn => {
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fn);
+    new MutationObserver(fn).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  };
+
+  /* ---------- "Analyze" illustration ---------- */
+  (function () {
+    const gS = $('#ill-scatter'), rnd = mulberry32(9);
+    for (let i = 0; i < 22; i++) {
+      const x = 32 + i * 8.8 + (rnd() - .5) * 6;
+      const y = Math.min(124, Math.max(18, 120 - (x - 28) * 0.44 + normal(rnd) * 9));
+      svgEl('circle', { cx: x.toFixed(1), cy: y.toFixed(1), r: 2.4, fill: 'var(--lake)', opacity: .7 }, gS);
+    }
+  })();
+  if (reduce) document.querySelectorAll('.ill animate').forEach(a => a.remove());
+
+  /* ---------- Page background: lake surface ---------- */
+  (function () {
+    const cv = $('#bg-waves'), g = cv.getContext('2d');
+    let w = 0, h = 0, C = {}, last = 0;
+    const L = 20;
+    function size() {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = innerWidth; h = innerHeight;
+      cv.width = w * dpr; cv.height = h * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      C = { lake: css('--lake'), gold: css('--gold') };
+    }
+    function draw(ts) {
+      const t = ts / 1000 + scrollY * 0.0015;
+      g.clearRect(0, 0, w, h);
+      for (let i = 0; i < L; i++) {
+        const k = i / (L - 1), gold = i === 7;
+        const base = h * (0.5 + Math.pow(k, 1.5) * 0.52);
+        const amp = 2 + k * 9, f1 = 0.006 - k * 0.0025;
+        g.strokeStyle = gold ? C.gold : C.lake;
+        g.globalAlpha = gold ? 0.28 : 0.03 + k * 0.1;
+        g.lineWidth = gold ? 1.2 : 0.8 + k * 0.6;
+        g.beginPath();
+        for (let x = -10; x <= w + 10; x += 12) {
+          const y = base + Math.sin(x * f1 + t * (0.5 + k * 0.4) + i) * amp + Math.sin(x * f1 * 2.3 - t * 0.35 + i * 1.7) * amp * 0.4;
+          x < 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+        }
+        g.stroke();
+      }
+      g.globalAlpha = 1;
+    }
+    function loop(ts) { if (ts - last > 33) { draw(ts); last = ts; } requestAnimationFrame(loop); }
+    size(); draw(0);
+    addEventListener('resize', () => { size(); draw(last); });
+    if (reduce) addEventListener('scroll', () => draw(0), { passive: true }); else requestAnimationFrame(loop);
+    onTheme(() => { size(); draw(last); });
+  })();
+
+  /* ---------- BLH-IA solution slider ---------- */
+  (function () {
+    // Neural network for the "Learn" slide
+    const nn = $('#nn'), L = [[110, [60, 105, 150, 195]], [200, [40, 85, 130, 175, 220]], [290, [75, 130, 185]]];
+    const lit = [new Set(['0-1', '1-2', '2-3', '3-4', '1-0']), new Set(['1-0', '2-1', '3-1', '4-2', '0-0'])];
+    for (let a = 0; a < 2; a++) L[a][1].forEach((y1, i) => L[a + 1][1].forEach((y2, j) => {
+      const on = lit[a].has(i + '-' + j);
+      svgEl('line', { x1: L[a][0], y1, x2: L[a + 1][0], y2, class: 'nn-e' + (on ? ' on' : '') }, nn);
+    }));
+    L[0][1].forEach(y => svgEl('circle', { cx: L[0][0], cy: y, r: 7, fill: 'var(--s-lake)' }, nn));
+    L[1][1].forEach((y, i) => svgEl('circle', { cx: L[1][0], cy: y, r: 8, class: 'nn-h', style: `animation-delay:${-i * .6}s` }, nn));
+    L[2][1].forEach(y => svgEl('circle', { cx: L[2][0], cy: y, r: 7, fill: 'var(--gold)' }, nn));
+
+    const root = $('#solution'), track = $('.sol-track', root), vp = $('.sol-viewport', root);
+    const slides = [...root.querySelectorAll('.sol-slide')], steps = [...root.querySelectorAll('.sol-step')];
+    const playBtn = $('.sol-play', root), DUR = 8000;
+    let i = 0, elapsed = 0, lastT = null, stopped = reduce, hold = false;
+    function go(n, focus) {
+      i = (n + slides.length) % slides.length; elapsed = 0;
+      track.style.transform = `translateX(${-i * 100}%)`;
+      slides.forEach((s, k) => { const on = k === i; s.setAttribute('aria-hidden', String(!on)); s.inert = !on; });
+      steps.forEach((b, k) => { b.setAttribute('aria-selected', String(k === i)); b.tabIndex = k === i ? 0 : -1; b.style.setProperty('--p', k < i ? 1 : 0); });
+      if (focus) steps[i].focus();
+    }
+    function setStopped(v) {
+      stopped = v; root.classList.toggle('is-stopped', v);
+      playBtn.setAttribute('aria-label', v ? 'Play slideshow' : 'Pause slideshow');
+    }
+    function tick(t) {
+      if (lastT != null && !stopped && !hold && !document.hidden) {
+        elapsed += Math.min(100, t - lastT);
+        if (elapsed >= DUR) go(i + 1);
+        steps[i].style.setProperty('--p', Math.min(1, elapsed / DUR));
+      }
+      lastT = t; requestAnimationFrame(tick);
+    }
+    steps.forEach((b, k) => b.addEventListener('click', () => go(k)));
+    $('.sol-prev', root).addEventListener('click', () => go(i - 1));
+    $('.sol-next', root).addEventListener('click', () => go(i + 1));
+    playBtn.addEventListener('click', () => setStopped(!stopped));
+    $('.sol-steps', root).addEventListener('keydown', e => {
+      const map = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: slides.length - 1 };
+      if (e.key in map) { e.preventDefault(); go(map[e.key], true); }
+    });
+    root.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hold = true; });
+    root.addEventListener('pointerleave', () => { hold = false; });
+    root.addEventListener('focusin', () => { hold = true; });
+    root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) hold = false; });
+    let x0 = null;
+    vp.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+    vp.addEventListener('pointerup', e => { if (x0 == null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 45) { go(i + (dx < 0 ? 1 : -1)); } });
+    vp.addEventListener('pointercancel', () => { x0 = null; });
+    setStopped(stopped); go(0); requestAnimationFrame(tick);
+  })();
+
+  /* ---------- Tabs ---------- */
+  const DEMOS = ['iso', 'ens', 'soc'];
+  const tabs = Object.fromEntries(DEMOS.map(k => [k, $('#tab-' + k)]));
+  function showDemo(id) { for (const k in tabs) { tabs[k].setAttribute('aria-selected', k === id); $('#' + k).hidden = k !== id; } }
+  DEMOS.forEach(k => tabs[k].addEventListener('click', () => showDemo(k)));
+  const fromHash = () => { const h = location.hash.slice(1); if (DEMOS.includes(h)) showDemo(h); };
+  addEventListener('hashchange', fromHash);
+
+  /* ---------- Demo utilities ---------- */
+  async function runLog(el, steps, btn) {
+    btn.disabled = true; btn.classList.remove('pulse');
+    el.innerHTML = steps.map(s => `<li>${esc(s)}</li>`).join('');
+    for (const li of el.children) { li.className = 'run'; await sleep(420); li.className = 'done'; }
+    btn.disabled = false;
+  }
+  const setLogDone = (el, steps) => { el.innerHTML = steps.map(s => `<li class="done">${esc(s)}</li>`).join(''); };
+  function srcList(prefix, list) {
+    $('#' + prefix + '-src').innerHTML = list.map(d => `<label class="doc"><input type="checkbox" id="${prefix}-src-${d.id}" value="${d.id}" checked><span><span class="n">${esc(d.n)}</span><br><span class="m">${esc(d.m)}</span></span></label>`).join('');
+  }
+  const checked = prefix => new Set([...document.querySelectorAll('#' + prefix + '-src input:checked')].map(i => i.value));
+  function wireDemo(prefix, steps, run) {
+    const out = $('#' + prefix + '-out'), st = $('#' + prefix + '-stale'), btn = $('#' + prefix + '-run'), log = $('#' + prefix + '-log');
+    $('#' + prefix + '-in').addEventListener('change', () => { out.classList.add('is-stale'); st.hidden = false; btn.classList.add('pulse'); });
+    btn.addEventListener('click', async () => { await runLog(log, steps(), btn); run(); out.classList.remove('is-stale'); st.hidden = true; });
+    setLogDone(log, steps());
+    run();
+  }
+  const PRI = { 4: ['Critical', 'crit'], 3: ['High', 'crit'], 2: ['Medium', 'warn'], 1: ['Low', 'good'] };
+  const planHTML = (items, max = 7) => items.slice(0, max).map(p => `<li><span>${esc(p.t)}${p.c ? `<span class="c">${esc(p.c)}</span>` : ''}</span><span class="pill ${PRI[p.p][1]}">${PRI[p.p][0]}</span></li>`).join('') +
+    (items.length > max ? `<li style="grid-template-columns:28px 1fr"><span></span><span style="color:var(--muted)">+${items.length - max} lower-priority actions</span></li>` : '');
+  const bars = (el, rows) => { el.innerHTML = rows.map(r => `<div class="bar-row"><span>${esc(r.l)}</span><span class="bar"><i style="width:${Math.round(r.v * 100)}%"></i></span><span class="pct">${Math.round(r.v * 100)}%</span></div>`).join(''); };
+  const score = st => st === 'ok' ? 1 : st === 'partial' ? .5 : 0;
+  const filters = {};
+  document.querySelectorAll('.filters').forEach(f => {
+    const key = f.dataset.table; filters[key] = { f: 'all', render: null };
+    f.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      filters[key].f = b.dataset.f;
+      [...f.children].forEach(x => x.setAttribute('aria-pressed', x === b));
+      filters[key].render && filters[key].render();
+    });
+  });
+  function statusTable(key, rows, labels) {
+    const ord = { gap: 0, partial: 1, ok: 2 }, cls = { ok: 'good', partial: 'warn', gap: 'crit' };
+    filters[key].render = () => {
+      const f = filters[key].f;
+      $('#' + key + '-table').innerHTML = rows.filter(r => f === 'all' || r.st === f).sort((a, b) => ord[a.st] - ord[b.st])
+        .map(r => `<tr><td class="code">${r.code}</td><td>${esc(r.name)}</td><td><span class="pill ${cls[r.st]}">${labels[r.st]}</span></td><td>${esc(r.ev)}</td></tr>`).join('')
+        || `<tr><td colspan="4" style="color:var(--muted)">Nothing in this status.</td></tr>`;
+    };
+    filters[key].render();
+  }
+
+  /* =========================================================
+     DEMO 01 · ISO/IEC 27001:2022
+     ========================================================= */
+  const ISO_DOCS = [
+    { id: 'pol', n: 'Information security policy', m: 'PDF · v3.2' },
+    { id: 'inv', n: 'Asset inventory', m: 'XLSX · 412 assets' },
+    { id: 'rsk', n: 'Risk register 2026', m: 'XLSX · 7 risks' },
+    { id: 'acc', n: 'Access control procedure', m: 'DOCX · v1.4' },
+    { id: 'bcp', n: 'Business continuity plan', m: 'PDF · 03/2026' },
+    { id: 'frm', n: 'Training records', m: 'CSV · 186 employees' },
+    { id: 'bkp', n: 'Backup evidence', m: 'Logs · 90 days' },
+    { id: 'prv', n: 'Supplier contracts', m: 'PDF · 14 contracts' }
+  ];
+  const ISO_THEMES = { O: 'Organizational', P: 'People', F: 'Physical', T: 'Technological' };
+  // [code, name, theme, document, full coverage, action]
+  const ISO_CTRL = [
+    ['A.5.1', 'Policies for information security', 'O', 'pol', true, 'Keep the annual management review'],
+    ['A.5.2', 'Information security roles and responsibilities', 'O', 'pol', false, 'Formalize and communicate the RACI matrix'],
+    ['A.5.7', 'Threat intelligence', 'O', null, false, 'Subscribe to threat feeds and document their analysis'],
+    ['A.5.9', 'Inventory of information and other associated assets', 'O', 'inv', true, 'Assign an owner to the remaining assets'],
+    ['A.5.10', 'Acceptable use of information', 'O', 'inv', false, 'Publish the acceptable use policy'],
+    ['A.5.12', 'Classification of information', 'O', 'inv', true, 'Review labeling of confidential assets'],
+    ['A.5.15', 'Access control', 'O', 'acc', true, 'Review the access policy with asset owners'],
+    ['A.5.18', 'Access rights', 'O', 'acc', true, 'Automate joiners and leavers from HR'],
+    ['A.5.19', 'Information security in supplier relationships', 'O', 'prv', true, 'Classify suppliers by criticality'],
+    ['A.5.20', 'Addressing security within supplier agreements', 'O', 'prv', false, 'Add incident notification clauses'],
+    ['A.5.23', 'Information security for use of cloud services', 'O', null, false, 'Define cloud selection and exit criteria'],
+    ['A.5.24', 'Incident management planning and preparation', 'O', null, false, 'Write the incident response procedure'],
+    ['A.5.29', 'Information security during disruption', 'O', 'bcp', true, 'Include security in continuity plan tests'],
+    ['A.5.30', 'ICT readiness for business continuity', 'O', 'bcp', false, 'Test data center recovery (RTO/RPO)'],
+    ['A.6.1', 'Screening', 'P', null, false, 'Define pre-employment background checks'],
+    ['A.6.3', 'Security awareness, education and training', 'P', 'frm', true, 'Add quarterly phishing simulations'],
+    ['A.6.7', 'Remote working', 'P', 'pol', false, 'Develop the secure remote working policy'],
+    ['A.7.1', 'Physical security perimeters', 'F', null, false, 'Document zones and perimeters of each site'],
+    ['A.7.4', 'Physical security monitoring', 'F', null, false, 'Log monitoring of physical access'],
+    ['A.8.2', 'Privileged access rights', 'T', 'acc', true, 'Review privileged accounts every quarter'],
+    ['A.8.5', 'Secure authentication', 'T', 'acc', false, 'Extend MFA to all remote access'],
+    ['A.8.8', 'Management of technical vulnerabilities', 'T', null, false, 'Monthly scanning and patching deadlines'],
+    ['A.8.13', 'Information backup', 'T', 'bkp', true, 'Document restore tests'],
+    ['A.8.15', 'Logging', 'T', null, false, 'Centralize logs and define retention'],
+    ['A.8.16', 'Monitoring activities', 'T', null, false, 'Define detection use cases'],
+    ['A.8.24', 'Use of cryptography', 'T', 'pol', false, 'Approve the encryption and key management policy']
+  ];
+  const ISO_RISKS = [
+    ['R1', 'Ransomware on file servers', 4, 5, ['A.8.13', 'A.8.8']],
+    ['R2', 'Abuse of privileged access', 3, 4, ['A.8.2', 'A.5.18']],
+    ['R3', 'Data leak at a cloud provider', 3, 4, ['A.5.23', 'A.5.20']],
+    ['R4', 'Targeted phishing against staff', 4, 3, ['A.6.3', 'A.8.5']],
+    ['R5', 'Prolonged data center outage', 2, 5, ['A.5.30', 'A.5.29']],
+    ['R6', 'Loss of laptops containing data', 3, 2, ['A.8.24']],
+    ['R7', 'Incident without a coordinated response', 3, 4, ['A.5.24', 'A.8.16']]
+  ];
+  srcList('iso', ISO_DOCS);
+  const ISO_DOCNAME = Object.fromEntries(ISO_DOCS.map(d => [d.id, d.n]));
+  function runIso() {
+    const on = checked('iso');
+    const rows = ISO_CTRL.map(([code, name, theme, doc, full, action]) => {
+      const has = doc && on.has(doc);
+      return { code, name, theme, action, st: has ? (full ? 'ok' : 'partial') : 'gap', ev: has ? ISO_DOCNAME[doc] : '—' };
+    });
+    const by = Object.fromEntries(rows.map(r => [r.code, r]));
+    const haveRisks = on.has('rsk');
+    const risks = haveRisks ? ISO_RISKS.map(([id, n, l, i, c]) => {
+      const rl = Math.max(1, Math.round(l - c.reduce((a, k) => a + score(by[k].st), 0)));
+      return { id, n, l, i, rl, s: rl * i, c };
+    }) : [];
+    const ready = rows.reduce((a, r) => a + score(r.st), 0) / rows.length;
+    const n = s => rows.filter(r => r.st === s).length, high = risks.filter(r => r.s >= 12).length;
+    const tone = ready >= .7 ? 'good' : ready >= .45 ? 'warn' : 'crit';
+    $('#iso-kpis').innerHTML = `
+      <div class="kpi"><span class="k">Readiness</span><span class="v ${tone}">${Math.round(ready * 100)}%</span><span class="d">simulated index</span></div>
+      <div class="kpi"><span class="k">Covered</span><span class="v">${n('ok')}</span><span class="d">of ${rows.length} controls</span></div>
+      <div class="kpi"><span class="k">Gaps</span><span class="v crit">${n('gap')}</span><span class="d">+${n('partial')} partial</span></div>
+      <div class="kpi"><span class="k">High risks</span><span class="v ${haveRisks ? (high ? 'warn' : 'good') : 'crit'}">${haveRisks ? high : '—'}</span><span class="d">${haveRisks ? 'residual ≥ 12' : 'no register'}</span></div>`;
+    bars($('#iso-bars'), Object.keys(ISO_THEMES).map(t => { const rs = rows.filter(r => r.theme === t); return { l: ISO_THEMES[t], v: rs.reduce((a, r) => a + score(r.st), 0) / rs.length }; }));
+    if (!haveRisks) $('#iso-heat').innerHTML = `<div class="empty">No risk register. Add it to calculate residual risk.</div>`;
+    else {
+      let cells = '';
+      for (let l = 5; l >= 1; l--) for (let i = 1; i <= 5; i++) {
+        const s = l * i, here = risks.filter(x => x.rl === l && x.i === i);
+        const col = s >= 15 ? 'var(--crit)' : s >= 8 ? 'var(--warn)' : 'var(--good)';
+        cells += `<div class="cell" style="background:color-mix(in srgb, ${col} ${10 + Math.min(s, 20) * 2}%, var(--surface))" title="Likelihood ${l} × Impact ${i}">${here.map(x => `<span class="chip-r" title="${esc(x.n)}">${x.id}</span>`).join('')}</div>`;
+      }
+      $('#iso-heat').innerHTML = `<div class="heat-wrap"><div class="heat-y">Likelihood →</div><div class="heat">${cells}</div><div class="heat-x">Impact →</div></div>`;
+    }
+    statusTable('iso', rows, { ok: 'Covered', partial: 'Partial', gap: 'No evidence' });
+    const riskOf = code => Math.max(0, ...risks.filter(r => r.c.includes(code)).map(r => r.l * r.i));
+    const plan = rows.filter(r => r.st !== 'ok').map(r => { const rs = riskOf(r.code); return { p: r.st === 'gap' ? (rs >= 15 ? 3 : 2) : (rs >= 15 ? 2 : 1), rs, t: r.action, c: `${r.code} · ${r.name}` }; });
+    if (!haveRisks) plan.push({ p: 4, rs: 99, t: 'Build the risk register: without it nothing can be prioritized', c: 'Clause 6.1.2 · Risk assessment' });
+    plan.sort((a, b) => b.p - a.p || b.rs - a.rs);
+    $('#iso-plan').innerHTML = planHTML(plan);
+  }
+  wireDemo('iso', () => {
+    const on = checked('iso');
+    return [`Classifying ${on.size} documents`, on.has('inv') ? 'Extracting 412 assets from the inventory' : 'Asset inventory not available',
+      `Mapping evidence to ${ISO_CTRL.length} Annex A controls`, on.has('rsk') ? 'Calculating residual risk' : 'No risk register: limited prioritization', 'Generating the improvement plan'];
+  }, runIso);
+
+  /* =========================================================
+     DEMO 02 · ENS (RD 311/2022, simplified selection from Annex II)
+     ========================================================= */
+  const ENS_DOCS = [
+    { id: 'pol', n: 'Security policy', m: 'Approved by management' },
+    { id: 'nor', n: 'Security regulations', m: '12 internal rules' },
+    { id: 'pro', n: 'Security procedures', m: '21 procedures' },
+    { id: 'rsk', n: 'Risk analysis', m: 'MAGERIT methodology' },
+    { id: 'inv', n: 'Asset inventory', m: '318 assets' },
+    { id: 'inc', n: 'Incident management', m: 'Reporting to CCN-CERT' },
+    { id: 'log', n: 'Activity logs', m: 'SIEM · 180 days' },
+    { id: 'bkp', n: 'Backups', m: 'Restore tests' },
+    { id: 'frm', n: 'Training and awareness', m: '240 employees' },
+    { id: 'bcp', n: 'Continuity plan', m: '2025 impact analysis' }
+  ];
+  const ENS_MARCOS = { org: 'Organizational', op: 'Operational', mp: 'Protection' };
+  const ENS_CAT = { 1: 'Basic', 2: 'Medium', 3: 'High' };
+  // [measure, name, framework, minimum category, document, full coverage, action]
+  const ENS_M = [
+    ['org.1', 'Security policy', 'org', 1, 'pol', true, 'Review the policy and communicate it to all staff'],
+    ['org.2', 'Security regulations', 'org', 1, 'nor', true, 'Publish the regulations with read receipts'],
+    ['org.3', 'Security procedures', 'org', 1, 'pro', false, 'Complete the pending operating procedures'],
+    ['org.4', 'Authorization process', 'org', 1, null, false, 'Define the approval workflow for new systems'],
+    ['op.pl.1', 'Risk analysis', 'op', 1, 'rsk', true, 'Update the analysis after every relevant change'],
+    ['op.pl.2', 'Security architecture', 'op', 1, null, false, 'Document the architecture and its security zones'],
+    ['op.pl.4', 'Sizing and capacity management', 'op', 2, null, false, 'Set up a capacity plan with thresholds'],
+    ['op.acc.1', 'Identification', 'op', 1, 'pro', true, 'Review accounts without an identified owner'],
+    ['op.acc.2', 'Access requirements', 'op', 1, 'pro', false, 'Apply least privilege and review permissions'],
+    ['op.acc.6', 'Authentication mechanism', 'op', 1, null, false, 'Deploy two-factor authentication for remote access'],
+    ['op.exp.1', 'Asset inventory', 'op', 1, 'inv', true, 'Assign an owner to each asset'],
+    ['op.exp.2', 'Security configuration', 'op', 1, null, false, 'Harden servers using CCN-STIC guides'],
+    ['op.exp.6', 'Protection against malicious code', 'op', 1, 'log', false, 'Extend anti-malware to all endpoints'],
+    ['op.exp.7', 'Incident management', 'op', 1, 'inc', true, 'Test the procedure with an annual drill'],
+    ['op.exp.8', 'Activity logging', 'op', 1, 'log', true, 'Review log retention and protection'],
+    ['op.ext.1', 'Contracting and service level agreements', 'op', 2, null, false, 'Include ENS requirements in contracts'],
+    ['op.nub.1', 'Cloud service protection', 'op', 1, null, false, 'Require ENS conformity from the cloud provider'],
+    ['op.cont.1', 'Impact analysis', 'op', 2, 'bcp', true, 'Review the impact analysis every year'],
+    ['op.cont.2', 'Continuity plan', 'op', 3, 'bcp', false, 'Complete recovery plans for each service'],
+    ['op.cont.3', 'Periodic testing', 'op', 3, null, false, 'Schedule annual tests of the plan'],
+    ['op.mon.1', 'Intrusion detection', 'op', 1, 'log', false, 'Deploy intrusion detection at the perimeter'],
+    ['op.mon.2', 'Metrics system', 'op', 1, null, false, 'Define indicators for the INES report'],
+    ['mp.per.3', 'Awareness', 'mp', 1, 'frm', true, 'Add simulated phishing campaigns'],
+    ['mp.per.4', 'Training', 'mp', 1, 'frm', true, 'Train technical staff on CCN-STIC guides'],
+    ['mp.com.1', 'Secure perimeter', 'mp', 1, null, false, 'Review perimeter firewall rules'],
+    ['mp.com.2', 'Confidentiality protection', 'mp', 2, null, false, 'Encrypt communications between sites'],
+    ['mp.info.6', 'Backups', 'mp', 1, 'bkp', true, 'Keep an encrypted offline copy'],
+    ['mp.s.2', 'Protection of web services and applications', 'mp', 1, null, false, 'Deploy a WAF and review web vulnerabilities']
+  ];
+  srcList('ens', ENS_DOCS);
+  const ENS_DOCNAME = Object.fromEntries(ENS_DOCS.map(d => [d.id, d.n]));
+  const ensApplicable = () => { const cat = +$('#ens-cat').value; return ENS_M.filter(m => m[3] <= cat); };
+  function runEns() {
+    const on = checked('ens'), cat = +$('#ens-cat').value;
+    const rows = ensApplicable().map(([code, name, marco, min, doc, full, action]) => {
+      const has = doc && on.has(doc);
+      return { code, name, marco, action, st: has ? (full ? 'ok' : 'partial') : 'gap', ev: has ? ENS_DOCNAME[doc] : '—' };
+    });
+    const adeq = rows.reduce((a, r) => a + score(r.st), 0) / rows.length;
+    const n = s => rows.filter(r => r.st === s).length;
+    const tone = adeq >= .85 ? 'good' : adeq >= .55 ? 'warn' : 'crit';
+    $('#ens-kpis').innerHTML = `
+      <div class="kpi"><span class="k">Applicable</span><span class="v">${rows.length}</span><span class="d">${ENS_CAT[cat].toLowerCase()} category</span></div>
+      <div class="kpi"><span class="k">Met</span><span class="v good">${n('ok')}</span><span class="d">with evidence</span></div>
+      <div class="kpi"><span class="k">Gaps</span><span class="v crit">${n('gap')}</span><span class="d">+${n('partial')} partial</span></div>
+      <div class="kpi"><span class="k">Compliance</span><span class="v ${tone}">${Math.round(adeq * 100)}%</span><span class="d">simulated index</span></div>`;
+    bars($('#ens-bars'), Object.keys(ENS_MARCOS).map(k => { const rs = rows.filter(r => r.marco === k); return { l: ENS_MARCOS[k], v: rs.reduce((a, r) => a + score(r.st), 0) / rs.length }; }));
+    const orgGaps = rows.filter(r => r.marco === 'org' && r.st === 'gap').length;
+    const ready = adeq >= .85 && orgGaps === 0;
+    const type = cat === 1 ? 'Self-assessment' : 'Formal audit';
+    const result = cat === 1 ? 'Declaration of Conformity' : 'Certification of Conformity';
+    $('#ens-verdict').innerHTML = `
+      <div class="verdict ${ready ? 'ok' : 'no'}">
+        <span class="k">${type} · every 2 years</span>
+        <b>${result}</b>
+        <span>${ready ? 'Ready for assessment.' : `Not yet: ${n('gap')} gaps${orgGaps ? `, ${orgGaps} in the organizational framework` : ''}.`}</span>
+      </div>`;
+    statusTable('ens', rows, { ok: 'Met', partial: 'Partial', gap: 'No evidence' });
+    const plan = rows.filter(r => r.st !== 'ok').map(r => ({
+      p: r.st === 'gap' ? (r.marco === 'org' ? 3 : r.code.startsWith('op.cont') || r.code.startsWith('op.acc') ? 3 : 2) : 1,
+      t: r.action, c: `${r.code} · ${r.name}`
+    })).sort((a, b) => b.p - a.p);
+    $('#ens-plan').innerHTML = plan.length ? planHTML(plan) : `<li style="grid-template-columns:1fr"><span class="good">Every applicable measure has evidence.</span></li>`;
+  }
+  wireDemo('ens', () => {
+    const on = checked('ens'), cat = +$('#ens-cat').value;
+    return [`Classifying ${on.size} documents`, `System category: ${ENS_CAT[cat]}`, `Selecting ${ensApplicable().length} applicable Annex II measures`,
+      'Mapping evidence to each measure', 'Generating the Statement of Applicability and plan'];
+  }, runEns);
+
+  /* =========================================================
+     DEMO 03 · Cyber defense
+     ========================================================= */
+  const SOC_SRC = [
+    { id: 'fw', n: 'Firewall', m: '2.1 M events/day', ev: 2100000, al: 38 },
+    { id: 'edr', n: 'Endpoint EDR', m: '640 endpoints', ev: 860000, al: 22 },
+    { id: 'siem', n: 'SIEM correlation', m: 'Central rules', ev: 0, al: 15 },
+    { id: 'dns', n: 'DNS logs', m: '1.4 M queries/day', ev: 1400000, al: 12 },
+    { id: 'mail', n: 'Email gateway', m: '18,000 messages/day', ev: 18000, al: 9 },
+    { id: 'ti', n: 'Threat intelligence', m: '42,000 indicators', ev: 0, al: 0 }
+  ];
+  const SOC_INC = [
+    ['I1', 'Phishing with malicious attachment', 'T1566.001', 'access', 3, '3 mailboxes', 9, ['mail', 'edr', 'ti'], 'Quarantine the message and reset 3 passwords'],
+    ['I2', 'Brute force against the VPN', 'T1110', 'access', 2, 'vpn-gw-01', 6, ['fw', 'siem'], 'Block the source IPs and enforce MFA lockout'],
+    ['I3', 'Traffic to a suspicious C2 domain', 'T1071.004', 'c2', 4, 'PC-FIN-022', 10, ['dns', 'ti', 'fw'], 'Isolate PC-FIN-022 and block the domain'],
+    ['I4', 'Suspicious PowerShell execution', 'T1059.001', 'exec', 3, 'PC-FIN-022', 11, ['edr', 'siem'], 'Stop the process and capture forensic evidence'],
+    ['I5', 'Lateral movement over SMB', 'T1021.002', 'lateral', 3, 'SRV-FILE-03', 14, ['edr', 'siem', 'fw'], 'Disable the account and segment SRV-FILE-03'],
+    ['I6', 'Overnight outbound transfer', 'T1048', 'exfil', 4, 'SRV-FILE-03', 2, ['fw', 'dns', 'siem'], 'Block egress and review DLP logs'],
+    ['I7', 'Internal port scan', 'T1046', 'recon', 1, 'PC-OPS-114', 16, ['fw', 'edr'], 'Confirm with IT whether the scan was authorized']
+  ];
+  const SOC_STAGES = [['recon', 'Reconnaissance'], ['access', 'Initial access'], ['exec', 'Execution'], ['c2', 'Command & control'], ['lateral', 'Lateral movement'], ['exfil', 'Exfiltration']];
+  const SOC_SENS = { low: { min: .6, f: .6, fp: 0 }, balanced: { min: .3, f: 1, fp: 3 }, high: { min: 0, f: 1.6, fp: 9 } };
+  const big = v => v >= 1e6 ? (v / 1e6).toFixed(1) + ' M' : v >= 1e4 ? Math.round(v / 1e3) + ' k' : v.toLocaleString('en-US');
+  srcList('soc', SOC_SRC);
+  function runSoc() {
+    const on = checked('soc'), sens = SOC_SENS[$('#soc-sens').value];
+    const inc = SOC_INC.map(([id, t, tech, stage, sev, host, hour, sup, act]) => ({ id, t, tech, stage, sev, host, hour, act, conf: sup.filter(s => on.has(s)).length / sup.length }))
+      .filter(x => x.conf > 0 && x.conf >= sens.min).sort((a, b) => b.sev - a.sev || b.conf - a.conf);
+    const events = SOC_SRC.filter(s => on.has(s.id)).reduce((a, s) => a + s.ev, 0);
+    const alerts = Math.round(SOC_SRC.filter(s => on.has(s.id)).reduce((a, s) => a + s.al, 0) * sens.f) + (on.size ? sens.fp : 0);
+    const mttd = on.size ? 4 + (on.has('siem') ? 0 : 12) + (on.has('edr') ? 0 : 8) : null;
+    const crit = inc.filter(x => x.sev >= 3).length;
+    $('#soc-kpis').innerHTML = `
+      <div class="kpi"><span class="k">Events</span><span class="v">${events ? big(events) : '—'}</span><span class="d">analyzed · 24 h</span></div>
+      <div class="kpi"><span class="k">Alerts</span><span class="v">${alerts}</span><span class="d">before correlation</span></div>
+      <div class="kpi"><span class="k">Incidents</span><span class="v ${crit ? 'crit' : inc.length ? 'warn' : 'good'}">${inc.length}</span><span class="d">${crit} high or critical</span></div>
+      <div class="kpi"><span class="k">Detection</span><span class="v ${mttd == null ? '' : mttd > 12 ? 'warn' : 'good'}">${mttd != null ? mttd + ' min' : '—'}</span><span class="d">mean time</span></div>`;
+    const hot = new Set(inc.map(x => x.hour)), rnd = mulberry32(404);
+    if (!events) $('#soc-hours').innerHTML = `<div class="empty">Add at least one log source.</div>`;
+    else {
+      const hours = Array.from({ length: 24 }, (_, h) => events / 24 * (0.6 + 0.35 + 0.65 * Math.max(0, Math.sin((h - 6) / 24 * Math.PI * 2 - .2))) * (0.9 + rnd() * .2) * (hot.has(h) ? 1.45 : 1));
+      const max = Math.max(...hours);
+      $('#soc-hours').innerHTML = `<div class="vbars">${hours.map((v, h) => `<div class="vcol" title="${String(h).padStart(2, '0')}:00 · ${Math.round(v).toLocaleString('en-US')} events"><div class="seg ${hot.has(h) ? 'hot' : ''}" style="height:${(v / max * 100).toFixed(1)}%"></div></div>`).join('')}</div>` +
+        `<div class="vbars-x">${hours.map((_, h) => `<span>${h % 3 === 0 ? String(h).padStart(2, '0') : ''}</span>`).join('')}</div>`;
+    }
+    const stages = new Set(inc.map(x => x.stage));
+    $('#soc-chain').innerHTML = SOC_STAGES.map(([k, l]) => `<div class="${stages.has(k) ? 'hit' : ''}">${l}</div>`).join('');
+    const ids = new Set(inc.map(x => x.id)), campaign = ['I3', 'I4', 'I5', 'I6'].every(i => ids.has(i));
+    $('#soc-camp').innerHTML = campaign ? (on.has('siem')
+      ? `<div class="stale-note" style="color:var(--crit);background:color-mix(in srgb, var(--crit) 10%, transparent)">Correlated campaign: PC-FIN-022 → SRV-FILE-03 (C2, execution, lateral movement and exfiltration).</div>`
+      : `<div class="stale-note">These detections look related, but without SIEM they stay isolated.</div>`) : '';
+    $('#soc-table').innerHTML = inc.map(x => `<tr><td class="code">${x.id}</td><td>${esc(x.t)}</td><td class="code">${x.tech}</td><td class="code">${esc(x.host)}</td><td><span class="pill ${PRI[x.sev][1]}">${PRI[x.sev][0]}</span></td><td class="code">${Math.round(x.conf * 100)}%</td></tr>`).join('')
+      || `<tr><td colspan="6" style="color:var(--muted)">No incidents at this sensitivity.</td></tr>`;
+    $('#soc-plan').innerHTML = inc.length ? planHTML(inc.map(x => ({ p: x.sev, t: x.act, c: `${x.id} · ${x.t}` })), 6) : `<li style="grid-template-columns:1fr"><span style="color:var(--muted)">No pending actions.</span></li>`;
+  }
+  wireDemo('soc', () => {
+    const on = checked('soc'), ev = SOC_SRC.filter(s => on.has(s.id)).reduce((a, s) => a + s.ev, 0);
+    return [`Ingesting ${big(ev)} events from ${on.size} sources`, on.has('ti') ? 'Enriching with 42,000 indicators' : 'No threat intelligence: enrichment skipped',
+      'Correlating events across sources (own model)', 'Mapping detections to MITRE ATT&CK', 'Prioritizing incidents and response'];
+  }, runSoc);
+
+  fromHash();
+
+  /* ---------- Contact ---------- */
+  $('#contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#c-name'), email = $('#c-email'), ok = $('#form-ok');
+    ok.hidden = false;
+    if (!name.value.trim() || !email.value.trim() || !email.validity.valid) {
+      ok.style.borderColor = 'var(--crit)';
+      ok.textContent = 'Please enter your name and a valid email address so we can reply.';
+      (!name.value.trim() ? name : email).focus();
+      return;
+    }
+    ok.style.borderColor = '';
+    ok.textContent = `Thanks, ${name.value.trim()}. Your request about “${$('#c-topic').value}” is ready. In this demo version the form isn't connected yet, so nothing has been sent.`;
+  });
+})();
+</script>
+
+</body>
+</html>

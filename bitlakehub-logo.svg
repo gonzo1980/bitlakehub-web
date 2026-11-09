@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 72" width="660" height="144">
+  <title>bitlakehub</title>
+  <g transform="translate(4 4)">
+    <path d="M32 4L54 12V30C54 45 44.5 55 32 60C19.5 55 10 45 10 30V12Z" fill="none" stroke="#1F5FA8" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M18 32q3.5-3 7 0t7 0t7 0t7 0M20 40q3-2.6 6 0t6 0t6 0t6 0M24 48q2-2 4 0t4 0t4 0t4 0" fill="none" stroke="#1F5FA8" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="28" y="15" width="8" height="8" rx="1" fill="#C9A227"/>
+  </g>
+  <text x="80" y="49" font-family="'Archivo', 'Segoe UI', sans-serif" font-size="40" font-weight="700" fill="#0C1B2A">bit<tspan fill="#1F5FA8">lake</tspan>hub</text>
+</svg>
